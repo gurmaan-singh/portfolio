@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gurmaan Singh: tracking, control and networking projects</title>
+<meta name="description" content="Gurmaan Singh, mechatronics engineering student at Fontys. A radar tracker, a quadrotor flight-controller simulator, a reliable transport protocol over UDP, a pathfinding lab and a situational-picture map, each with tests and written-up design notes.">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23050505'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e0122b' stroke-width='2'/%3E%3Cpath d='M16 16 L25 9' stroke='%23e0122b' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#work">Skip to projects</a>
+
+<header class="top">
+  <a class="brand" href="#top">GS<span>_</span></a>
+  <nav aria-label="Main">
+    <a href="#work">Projects</a>
+    <a href="#how">How I work</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <canvas id="radar" aria-hidden="true"></canvas>
+    <div class="hero-text">
+      <p class="eyebrow">Mechatronics engineering, Fontys</p>
+      <h1>Gurmaan Singh</h1>
+      <p class="lead">I build systems that sense, decide and act: trackers, controllers, protocols and the tools to see what they are doing. Five projects, each with tests and the design notes behind it.</p>
+      <p class="cta"><a class="btn primary" href="#work">See the work</a> <a class="btn" href="https://github.com/gurmaan-singh">GitHub</a></p>
+    </div>
+    <ul class="facts" aria-label="At a glance">
+      <li><b>5</b><span>projects with write-ups</span></li>
+      <li><b>140</b><span>automated tests</span></li>
+      <li><b>C++20</b><span>Python · TypeScript</span></li>
+      <li><b>2027</b><span>available for a summer job</span></li>
+    </ul>
+  </section>
+
+  <section id="work" class="section">
+    <h2><span>01</span> Selected work</h2>
+
+    <article class="project" data-reveal>
+      <div class="shot"><img src="assets/vakt.png" alt="A radar scenario: noisy plots and false alarms, the tracks drawn over the true paths, and the tracking error of a single-model filter against an IMM" loading="lazy" width="1511" height="636"></div>
+      <div class="body">
+        <p class="kicker">C++20 · estimation · real time</p>
+        <h3>vakt <small>multi-target radar tracker</small></h3>
+        <p>Takes noisy measurements with false alarms and missed detections and keeps one track per object. It runs two motion models side by side (straight flight and coordinated turn) and weights them by how well each fits, so a jet in a hard turn is not lost. Data association, track start and deletion, ASTERIX output, a lock-free queue between sensor and tracker, and a scorer that measures how good the result is.</p>
+        <ul class="nums">
+          <li><b>124 m</b> vs 144 m<span>mean tracking error, IMM against one model, 40 runs</span></li>
+          <li><b>271 → 60</b><span>identity switches, same runs</span></li>
+          <li><b>34</b><span>tests, no warnings at /W4</span></li>
+        </ul>
+        <p class="honest">60 identity switches is still too many. Simulated data only. Both are in the README as next steps.</p>
+        <p class="tags"><span>Eigen</span><span>IMM / EKF</span><span>Hungarian assignment</span><span>ASTERIX CAT048</span><span>CMake · CI</span></p>
+        <p class="links"><a class="btn small" href="https://github.com/gurmaan-singh/vakt">Source</a> <a class="btn small" href="https://github.com/gurmaan-singh/vakt/blob/main/docs/DESIGN.md">Design notes</a></p>
+      </div>
+    </article>
+
+    <article class="project flip" data-reveal>
+      <div class="shot"><img src="assets/hover.gif" alt="Animation of a simulated quadrotor flying a figure of eight, seen from above with a height plot beside it" loading="lazy" width="528" height="220"></div>
+      <div class="body">
+        <p class="kicker">Python · control · estimation</p>
+        <h3>hover <small>quadrotor flight-controller simulator</small></h3>
+        <p>Rigid-body physics with lagged motors, drag and wind; noisy gyro, accelerometer, GPS, barometer and compass; a 15-state error-state Kalman filter that estimates position, velocity, attitude and both sensor biases; and a cascaded controller from position down to motor thrusts. The controller only sees what the filter tells it.</p>
+        <ul class="nums">
+          <li><b>0.10 m</b><span>rms error on a figure of eight at 3.5 m/s</span></li>
+          <li><b>0.3°</b><span>attitude estimate error in flight</span></li>
+          <li><b>23</b><span>tests: physics against closed-form results, then whole flights</span></li>
+        </ul>
+        <p class="honest">Survives a 6 m/s gust and one motor at 55 % thrust. Not sensor delay or total motor loss, and the README says so.</p>
+        <p class="tags"><span>NumPy</span><span>ESKF</span><span>Quaternions</span><span>Cascaded PID</span><span>Mixer saturation</span></p>
+        <p class="links"><a class="btn small" href="https://github.com/gurmaan-singh/hover">Source</a> <a class="btn small" href="https://github.com/gurmaan-singh/hover/blob/main/docs/DESIGN.md">Design notes</a></p>
+      </div>
+    </article>
+
+    <article class="project" data-reveal>
+      <div class="shot"><img src="assets/rudp.png" alt="Congestion window of one flow through a bottleneck link, a textbook sawtooth between 50 and 100 kilobytes" loading="lazy" width="1260" height="520"></div>
+      <div class="body">
+        <p class="kicker">C++20 · networking · concurrency</p>
+        <h3>rudp <small>reliable byte stream over UDP</small></h3>
+        <p>Handshake, sliding window, selective acknowledgements, retransmission timer, congestion and flow control, clean close. The connection class does no I/O and never reads a clock, so the same code runs over real sockets on Windows and Linux and inside a deterministic network simulator that drops, delays, reorders, duplicates and corrupts packets.</p>
+        <ul class="nums">
+          <li><b>89 %</b><span>of a bottleneck link filled; 38 % with congestion control off</span></li>
+          <li><b>20 %</b><span>packet loss survived, every byte checked</span></li>
+          <li><b>28</b><span>tests, incl. 40 random networks and a real loopback transfer</span></li>
+        </ul>
+        <p class="honest">One connection per socket, no delayed ACKs, Reno-style congestion control. The design notes include the bug that made a 40 ms path report a 4 s round trip.</p>
+        <p class="tags"><span>Winsock / POSIX</span><span>SACK</span><span>RFC 6298</span><span>Simulation</span><span>GoogleTest</span></p>
+        <p class="links"><a class="btn small" href="https://github.com/gurmaan-singh/rudp">Source</a> <a class="btn small" href="https://github.com/gurmaan-singh/rudp/blob/main/docs/DESIGN.md">Design notes</a></p>
+      </div>
+    </article>
+
+    <article class="project flip" data-reveal>
+      <div class="shot"><img src="assets/labyrint.png" alt="Jump Point Search on a maze: dark to bright red shows the order cells were searched, a white line the path" loading="lazy" width="1400" height="900"></div>
+      <div class="body">
+        <p class="kicker">TypeScript · algorithms · visualisation</p>
+        <h3>labyrint <small>pathfinding lab</small></h3>
+        <p>A* and its relatives, Jump Point Search, any-angle Theta*, and D* Lite for replanning while the map changes, with eight map generators, a benchmark, and a browser visualiser that runs them side by side. Every optimal algorithm is checked against Dijkstra on hundreds of random maps.</p>
+        <ul class="nums">
+          <li><b>11×</b><span>fewer cells searched by JPS than A* on cave maps</span></li>
+          <li><b>7×</b><span>less work for D* Lite than replanning from scratch</span></li>
+          <li><b>24</b><span>tests, no failures in the cross-checks</span></li>
+        </ul>
+        <p class="tags"><span>A*</span><span>JPS</span><span>Theta*</span><span>D* Lite</span><span>Canvas</span></p>
+        <p class="links"><a class="btn small primary" href="labyrint/">Try it live</a> <a class="btn small" href="https://github.com/gurmaan-singh/labyrint">Source</a> <a class="btn small" href="https://github.com/gurmaan-singh/labyrint/blob/main/docs/DESIGN.md">Design notes</a></p>
+      </div>
+    </article>
+
+    <article class="project" data-reveal>
+      <div class="shot"><img src="assets/lagesbild.png" alt="A map of the Baltic Sea with symbols for aircraft and ships, restricted zones, a track list and an alert feed" loading="lazy" width="1500" height="900"></div>
+      <div class="body">
+        <p class="kicker">TypeScript · maps · live data</p>
+        <h3>lägesbild <small>situational picture</small></h3>
+        <p>A web map that shows what is where: standard military symbols, one-minute vectors, trails, uncertainty circles, zones with alerts, a sorted track list. It takes tracks from a scripted scenario, from vakt over UDP, from live aircraft positions (OpenSky) and from live ship positions (AIS, with a decoder written from the spec).</p>
+        <ul class="nums">
+          <li><b>4</b><span>sources behind one track type</span></li>
+          <li><b>31</b><span>tests, the AIS decoder checked on a real sentence</span></li>
+          <li><b>0</b><span>live tracks ever labelled friend or hostile</span></li>
+        </ul>
+        <p class="honest">Nothing in a transponder says who is friendly, so live data is only ever neutral or unknown. The AIS stream was not reachable from my network, so that path is tested on sentences, not the live feed.</p>
+        <p class="tags"><span>MapLibre GL</span><span>milsymbol</span><span>WebSocket</span><span>NMEA / AIS</span><span>Node</span></p>
+        <p class="links"><a class="btn small" href="https://github.com/gurmaan-singh/lagesbild">Source</a> <a class="btn small" href="https://github.com/gurmaan-singh/lagesbild/blob/main/docs/DESIGN.md">Design notes</a></p>
+      </div>
+    </article>
+  </section>
+
+  <section id="how" class="section">
+    <h2><span>02</span> How I work</h2>
+    <div class="cols">
+      <div>
+        <h3>Tests are the evidence</h3>
+        <p>Claims in a README should be things a test can fail. The pathfinders are compared with Dijkstra on random maps; the transport protocol is run over hundreds of random bad networks and checks every byte; the flight controller is flown through gusts and a failing motor.</p>
+      </div>
+      <div>
+        <h3>I write down what went wrong</h3>
+        <p>Every project has design notes that include the bugs: a filter that started 95° out because the accelerometer read zero on the floor, a timer stuck at 60 seconds, a server that crashed on a 404. If I cannot explain a choice, I have not understood it yet.</p>
+      </div>
+      <div>
+        <h3>Limits are in the README</h3>
+        <p>Each project lists what it does not do and what I would do next. A tracker that has only seen simulated data should say so on its front page.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="section">
+    <h2><span>03</span> About</h2>
+    <div class="about">
+      <p>I study mechatronics engineering at Fontys. My work sits where hardware meets software: control, estimation, embedded systems and the networks that connect them. I work in C++, Python and TypeScript, and with Arduino and PlatformIO, KiCad, MATLAB, LabVIEW and Siemens PLC tools at university.</p>
+      <p>I keep a notebook of about 1,400 linked notes and treat projects like experiments: a hypothesis, a measurement, a write-up. I am looking for an internship or summer job in 2027 and I am open to any location.</p>
+    </div>
+  </section>
+
+  <section id="contact" class="section">
+    <h2><span>04</span> Contact</h2>
+    <p>The code is on <a href="https://github.com/gurmaan-singh">GitHub</a>. Each repository has a README with how to run it, what it shows, and where it falls short.</p>
+  </section>
+</main>
+
+<footer>
+  <span>© 2026 Gurmaan Singh</span>
+  <span>Static page. No tracking, no cookies.</span>
+</footer>
+<script src="main.js"></script>
+</body>
+</html>
