@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Gurmaan Singh: tracking, control and networking projects</title>
-<meta name="description" content="Gurmaan Singh, mechatronics engineering student at Fontys. A radar tracker, a quadrotor flight-controller simulator, a reliable transport protocol over UDP, a pathfinding lab, a situational-picture map, robot localisation and SLAM, motor-control firmware building blocks, trajectory optimisation, a PLC-language interpreter, camera geometry, and the CAN bus, each with tests and written-up design notes.">
+<meta name="description" content="Gurmaan Singh, mechatronics engineering student at Fontys. A radar tracker, a quadrotor flight-controller simulator, a reliable transport protocol over UDP, a pathfinding lab, a situational-picture map, robot localisation and SLAM, motor-control firmware building blocks, trajectory optimisation, a PLC-language interpreter, camera geometry, the CAN bus, and real-time scheduling, each with tests and written-up design notes.">
 <meta name="theme-color" content="#050505">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23050505'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e0122b' stroke-width='2'/%3E%3Cpath d='M16 16 L25 9' stroke='%23e0122b' stroke-width='2'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="style.css">
@@ -28,12 +28,12 @@
     <div class="hero-text">
       <p class="eyebrow">Mechatronics engineering, Fontys</p>
       <h1>Gurmaan Singh</h1>
-      <p class="lead">I build systems that sense, decide and act: trackers, controllers, protocols and the tools to see what they are doing. Eleven projects, each with tests and the design notes behind it.</p>
+      <p class="lead">I build systems that sense, decide and act: trackers, controllers, protocols and the tools to see what they are doing. Twelve projects, each with tests and the design notes behind it.</p>
       <p class="cta"><a class="btn primary" href="#work">See the work</a> <a class="btn" href="https://github.com/gurmaan-singh">GitHub</a></p>
     </div>
     <ul class="facts" aria-label="At a glance">
-      <li><b>11</b><span>projects with write-ups</span></li>
-      <li><b>342</b><span>automated tests</span></li>
+      <li><b>12</b><span>projects with write-ups</span></li>
+      <li><b>364</b><span>automated tests</span></li>
       <li><b>C++20</b><span>Python / TypeScript</span></li>
       <li><b>2027</b><span>available for a summer job</span></li>
     </ul>
@@ -220,6 +220,22 @@
         <p class="honest">Classic CAN only, at the level of bits rather than voltages: no propagation delay, no CAN FD. The README says what the error counting leaves out.</p>
         <p class="tags"><span>CAN 2.0A/B</span><span>J1939</span><span>CRC-15</span><span>Bit stuffing</span><span>GoogleTest</span></p>
         <p class="links"><a class="btn small" href="https://github.com/gurmaan-singh/cansim">Source</a> <a class="btn small" href="https://github.com/gurmaan-singh/cansim/blob/main/docs/DESIGN.md">Design notes</a></p>
+      </div>
+    </article>
+    <article class="project flip" data-reveal>
+      <div class="shot"><img src="assets/rtsched.png" alt="Three schedules of the same tasks: with no protocol the high-priority task waits behind a medium one, with priority inheritance or ceiling it does not" loading="lazy" width="1286" height="688"></div>
+      <div class="body">
+        <p class="kicker">Python / real-time systems / analysis</p>
+        <h3>rtsched <small>real-time scheduling, simulated and proved</small></h3>
+        <p>A simulator for fixed-priority and earliest-deadline-first scheduling with shared resources, and the mathematics that predicts what it will do: response-time analysis, utilisation bounds, the processor-demand test. The tests make the two check each other, so the analytic worst case has to equal the simulated one on hundreds of random task sets. It reproduces the priority inversion that stalled the Mars Pathfinder lander, and the two protocols that fix it.</p>
+        <ul class="nums">
+          <li><b>400</b><span>random task sets where analysis and simulation must agree exactly</span></li>
+          <li><b>19 to 9</b><span>ticks for the high-priority task, no protocol against priority inheritance</span></li>
+          <li><b>22</b><span>tests in under a second</span></li>
+        </ul>
+        <p class="honest">One processor, no nested locks, and no cost for context switches. The README says so, and notes that its schedulability plot flatters rate monotonic by using friendly periods.</p>
+        <p class="tags"><span>RMS / EDF</span><span>Response-time analysis</span><span>Priority inheritance</span><span>Priority ceiling</span><span>pytest</span></p>
+        <p class="links"><a class="btn small" href="https://github.com/gurmaan-singh/rtsched">Source</a> <a class="btn small" href="https://github.com/gurmaan-singh/rtsched/blob/main/docs/DESIGN.md">Design notes</a></p>
       </div>
     </article>
   </section>
