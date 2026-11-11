@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Gurmaan Singh: tracking, control and networking projects</title>
-<meta name="description" content="Gurmaan Singh, mechatronics engineering student at Fontys. A radar tracker, a quadrotor flight-controller simulator, a reliable transport protocol over UDP, a pathfinding lab, a situational-picture map, robot localisation and SLAM, and motor-control firmware building blocks, each with tests and written-up design notes.">
+<meta name="description" content="Gurmaan Singh, mechatronics engineering student at Fontys. A radar tracker, a quadrotor flight-controller simulator, a reliable transport protocol over UDP, a pathfinding lab, a situational-picture map, robot localisation and SLAM, motor-control firmware building blocks, and trajectory optimisation, each with tests and written-up design notes.">
 <meta name="theme-color" content="#050505">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23050505'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e0122b' stroke-width='2'/%3E%3Cpath d='M16 16 L25 9' stroke='%23e0122b' stroke-width='2'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="style.css">
@@ -28,12 +28,12 @@
     <div class="hero-text">
       <p class="eyebrow">Mechatronics engineering, Fontys</p>
       <h1>Gurmaan Singh</h1>
-      <p class="lead">I build systems that sense, decide and act: trackers, controllers, protocols and the tools to see what they are doing. Seven projects, each with tests and the design notes behind it.</p>
+      <p class="lead">I build systems that sense, decide and act: trackers, controllers, protocols and the tools to see what they are doing. Eight projects, each with tests and the design notes behind it.</p>
       <p class="cta"><a class="btn primary" href="#work">See the work</a> <a class="btn" href="https://github.com/gurmaan-singh">GitHub</a></p>
     </div>
     <ul class="facts" aria-label="At a glance">
-      <li><b>7</b><span>projects with write-ups</span></li>
-      <li><b>190</b><span>automated tests</span></li>
+      <li><b>8</b><span>projects with write-ups</span></li>
+      <li><b>207</b><span>automated tests</span></li>
       <li><b>C++20</b><span>Python Â· TypeScript</span></li>
       <li><b>2027</b><span>available for a summer job</span></li>
     </ul>
@@ -156,6 +156,22 @@
         <p class="honest">Tested on a PC. It has not been built for a microcontroller yet, and the README says so.</p>
         <p class="tags"><span>C11</span><span>S-curve</span><span>PID + feed-forward</span><span>COBS · CRC-16</span><span>GoogleTest</span></p>
         <p class="links"><a class="btn small" href="https://github.com/gurmaan-singh/motionkit">Source</a></p>
+      </div>
+    </article>
+    <article class="project flip" data-reveal>
+      <div class="shot"><img src="assets/trajopt.gif" alt="Animation of a cart swinging a pole up from hanging and balancing it" loading="lazy" width="525" height="238"></div>
+      <div class="body">
+        <p class="kicker">Python · optimal control · autonomy</p>
+        <h3>trajopt <small>trajectory optimisation and receding-horizon control</small></h3>
+        <p>iLQR written from scratch, with control limits handled inside the optimiser, and a model-predictive controller on top. One solver swings a pendulum and a cart-pole up, parks a car between obstacles, and flies a quadrotor through four gates at set times. A receding-horizon version balances the pole with a model that is 10 to 20 % wrong while it gets shoved.</p>
+        <ul class="nums">
+          <li><b>4</b><span>different systems, one optimiser</span></li>
+          <li><b>1.1 cm</b><span>worst miss over four gates</span></li>
+          <li><b>17</b><span>tests, checked against the exact LQR solution and conservation laws</span></li>
+        </ul>
+        <p class="honest">It finds local optima, and the README shows the swing-up that goes wrong from a bad starting guess and what fixed it.</p>
+        <p class="tags"><span>iLQR / DDP</span><span>MPC</span><span>Control limits</span><span>Riccati</span><span>NumPy</span></p>
+        <p class="links"><a class="btn small" href="https://github.com/gurmaan-singh/trajopt">Source</a> <a class="btn small" href="https://github.com/gurmaan-singh/trajopt/blob/main/docs/DESIGN.md">Design notes</a></p>
       </div>
     </article>
   </section>
