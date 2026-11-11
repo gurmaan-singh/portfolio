@@ -230,7 +230,7 @@
         <p>A simulator for fixed-priority and earliest-deadline-first scheduling with shared resources, and the mathematics that predicts what it will do: response-time analysis, utilisation bounds, the processor-demand test. The tests make the two check each other, so the analytic worst case has to equal the simulated one on hundreds of random task sets. It reproduces the priority inversion that stalled the Mars Pathfinder lander, and the two protocols that fix it.</p>
         <ul class="nums">
           <li><b>400</b><span>random task sets where analysis and simulation must agree exactly</span></li>
-          <li><b>19 to 9</b><span>ticks for the high-priority task, no protocol against priority inheritance</span></li>
+          <li><b>17 to 7</b><span>ticks of response time for the high-priority task, no protocol against priority inheritance</span></li>
           <li><b>22</b><span>tests in under a second</span></li>
         </ul>
         <p class="honest">One processor, no nested locks, and no cost for context switches. The README says so, and notes that its schedulability plot flatters rate monotonic by using friendly periods.</p>
