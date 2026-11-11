@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Gurmaan Singh: tracking, control and networking projects</title>
-<meta name="description" content="Gurmaan Singh, mechatronics engineering student at Fontys. A radar tracker, a quadrotor flight-controller simulator, a reliable transport protocol over UDP, a pathfinding lab, a situational-picture map, robot localisation and SLAM, motor-control firmware building blocks, trajectory optimisation, and a PLC-language interpreter, each with tests and written-up design notes.">
+<meta name="description" content="Gurmaan Singh, mechatronics engineering student at Fontys. A radar tracker, a quadrotor flight-controller simulator, a reliable transport protocol over UDP, a pathfinding lab, a situational-picture map, robot localisation and SLAM, motor-control firmware building blocks, trajectory optimisation, a PLC-language interpreter, and camera geometry, each with tests and written-up design notes.">
 <meta name="theme-color" content="#050505">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23050505'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e0122b' stroke-width='2'/%3E%3Cpath d='M16 16 L25 9' stroke='%23e0122b' stroke-width='2'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="style.css">
@@ -28,12 +28,12 @@
     <div class="hero-text">
       <p class="eyebrow">Mechatronics engineering, Fontys</p>
       <h1>Gurmaan Singh</h1>
-      <p class="lead">I build systems that sense, decide and act: trackers, controllers, protocols and the tools to see what they are doing. Nine projects, each with tests and the design notes behind it.</p>
+      <p class="lead">I build systems that sense, decide and act: trackers, controllers, protocols and the tools to see what they are doing. Ten projects, each with tests and the design notes behind it.</p>
       <p class="cta"><a class="btn primary" href="#work">See the work</a> <a class="btn" href="https://github.com/gurmaan-singh">GitHub</a></p>
     </div>
     <ul class="facts" aria-label="At a glance">
-      <li><b>9</b><span>projects with write-ups</span></li>
-      <li><b>281</b><span>automated tests</span></li>
+      <li><b>10</b><span>projects with write-ups</span></li>
+      <li><b>307</b><span>automated tests</span></li>
       <li><b>C++20</b><span>Python Â· TypeScript</span></li>
       <li><b>2027</b><span>available for a summer job</span></li>
     </ul>
@@ -188,6 +188,22 @@
         <p class="honest">A subset, and not a certified runtime. It does not model real I/O delay or jitter, and the README lists what is missing.</p>
         <p class="tags"><span>IEC 61131-3</span><span>Recursive descent</span><span>Scan cycle</span><span>State machines</span><span>pytest</span></p>
         <p class="links"><a class="btn small" href="https://github.com/gurmaan-singh/plcsim">Source</a> <a class="btn small" href="https://github.com/gurmaan-singh/plcsim/blob/main/docs/DESIGN.md">Design notes</a></p>
+      </div>
+    </article>
+    <article class="project flip" data-reveal>
+      <div class="shot"><img src="assets/camlab.png" alt="A square grid bent into a barrel by lens distortion, and the same grid straightened by the estimated distortion" loading="lazy" width="1186" height="431"></div>
+      <div class="body">
+        <p class="kicker">Python · computer vision · geometry</p>
+        <h3>camlab <small>camera calibration and two-view geometry</small></h3>
+        <p>Camera calibration from views of a flat target (Zhang's method with nonlinear refinement), pose from a known object, and relative pose between two views with RANSAC against wrong matches. All written from scratch in NumPy, with no OpenCV, and scored against synthetic scenes where the right answer is known.</p>
+        <ul class="nums">
+          <li><b>0.12 %</b><span>focal length error with 15 views and 0.3 px noise</span></li>
+          <li><b>40 %</b><span>wrong matches survived, rotation within 1 degree</span></li>
+          <li><b>26</b><span>tests, including views that make calibration impossible</span></li>
+        </ul>
+        <p class="honest">The README shows a principal-point error that more data does not fix, and explains it: the lens model was too simple. It starts from pixel coordinates; there is no image processing.</p>
+        <p class="tags"><span>Homography · DLT</span><span>Levenberg-Marquardt</span><span>RANSAC</span><span>Epipolar geometry</span><span>NumPy</span></p>
+        <p class="links"><a class="btn small" href="https://github.com/gurmaan-singh/camlab">Source</a> <a class="btn small" href="https://github.com/gurmaan-singh/camlab/blob/main/docs/DESIGN.md">Design notes</a></p>
       </div>
     </article>
   </section>
