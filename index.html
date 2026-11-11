@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Gurmaan Singh: tracking, control and networking projects</title>
-<meta name="description" content="Gurmaan Singh, mechatronics engineering student at Fontys. A radar tracker, a quadrotor flight-controller simulator, a reliable transport protocol over UDP, a pathfinding lab and a situational-picture map, each with tests and written-up design notes.">
+<meta name="description" content="Gurmaan Singh, mechatronics engineering student at Fontys. A radar tracker, a quadrotor flight-controller simulator, a reliable transport protocol over UDP, a pathfinding lab, a situational-picture map, robot localisation and SLAM, and motor-control firmware building blocks, each with tests and written-up design notes.">
 <meta name="theme-color" content="#050505">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23050505'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e0122b' stroke-width='2'/%3E%3Cpath d='M16 16 L25 9' stroke='%23e0122b' stroke-width='2'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="style.css">
@@ -28,12 +28,12 @@
     <div class="hero-text">
       <p class="eyebrow">Mechatronics engineering, Fontys</p>
       <h1>Gurmaan Singh</h1>
-      <p class="lead">I build systems that sense, decide and act: trackers, controllers, protocols and the tools to see what they are doing. Five projects, each with tests and the design notes behind it.</p>
+      <p class="lead">I build systems that sense, decide and act: trackers, controllers, protocols and the tools to see what they are doing. Seven projects, each with tests and the design notes behind it.</p>
       <p class="cta"><a class="btn primary" href="#work">See the work</a> <a class="btn" href="https://github.com/gurmaan-singh">GitHub</a></p>
     </div>
     <ul class="facts" aria-label="At a glance">
-      <li><b>5</b><span>projects with write-ups</span></li>
-      <li><b>140</b><span>automated tests</span></li>
+      <li><b>7</b><span>projects with write-ups</span></li>
+      <li><b>190</b><span>automated tests</span></li>
       <li><b>C++20</b><span>Python Â· TypeScript</span></li>
       <li><b>2027</b><span>available for a summer job</span></li>
     </ul>
@@ -123,6 +123,39 @@
         <p class="honest">Nothing in a transponder says who is friendly, so live data is only ever neutral or unknown. The AIS stream was not reachable from my network, so that path is tested on sentences, not the live feed.</p>
         <p class="tags"><span>MapLibre GL</span><span>milsymbol</span><span>WebSocket</span><span>NMEA / AIS</span><span>Node</span></p>
         <p class="links"><a class="btn small" href="https://github.com/gurmaan-singh/lagesbild">Source</a> <a class="btn small" href="https://github.com/gurmaan-singh/lagesbild/blob/main/docs/DESIGN.md">Design notes</a></p>
+      </div>
+    </article>
+    <article class="project flip" data-reveal>
+      <div class="shot"><img src="assets/kartlagg.png" alt="Three maps of the same floor: the truth, the map from odometry alone smeared and rotated, and the crisp map from particle-filter SLAM" loading="lazy" width="1807" height="402"></div>
+      <div class="body">
+        <p class="kicker">Python · estimation · robotics</p>
+        <h3>kartlagg <small>localisation and SLAM from a 2D lidar</small></h3>
+        <p>A simulated robot that sees only with a lidar. One particle filter finds the robot on a known map. Another builds the map while finding the robot, with every particle carrying its own map and snapping each new scan to it. Both are written from scratch, along with the ray casting, the noise models and the map score.</p>
+        <ul class="nums">
+          <li><b>0.21 m</b> vs 1.38 m<span>position error, SLAM against odometry alone, five runs</span></li>
+          <li><b>0.87</b> vs 0.47<span>map quality (F1) over the same runs</span></li>
+          <li><b>17</b><span>tests, including SLAM beating dead reckoning</span></li>
+        </ul>
+        <p class="honest">Finding the robot with no prior succeeds in 7 of 10 runs at 1,000 particles. The failures are measured and explained in the README, not hidden.</p>
+        <p class="tags"><span>NumPy / SciPy</span><span>Particle filter</span><span>Likelihood field</span><span>Occupancy grid</span><span>Scan matching</span></p>
+        <p class="links"><a class="btn small" href="https://github.com/gurmaan-singh/kartlagg">Source</a> <a class="btn small" href="https://github.com/gurmaan-singh/kartlagg/blob/main/docs/DESIGN.md">Design notes</a></p>
+      </div>
+    </article>
+
+    <article class="project" data-reveal>
+      <div class="shot"><img src="assets/motionkit.png" alt="Tracking error and motor voltage along a move, with and without feed-forward" loading="lazy" width="1480" height="480"></div>
+      <div class="body">
+        <p class="kicker">C11 · embedded · motor control</p>
+        <h3>motionkit <small>motor-control firmware building blocks</small></h3>
+        <p>Jerk-limited S-curve motion profiles in closed form, a PID with the details a real loop needs, a quadrature encoder decoder, a ring buffer for interrupt handlers, and CRC-16 plus COBS framing for a serial link. No heap and no operating system, so it runs on a microcontroller and in a test on a PC. A simulated DC motor with friction checks the control loop.</p>
+        <ul class="nums">
+          <li><b>10×</b><span>smaller tracking error with feed-forward on the simulated motor</span></li>
+          <li><b>2,000</b><span>random S-curve moves checked against every limit</span></li>
+          <li><b>33</b><span>tests, in both float and double builds</span></li>
+        </ul>
+        <p class="honest">Tested on a PC. It has not been built for a microcontroller yet, and the README says so.</p>
+        <p class="tags"><span>C11</span><span>S-curve</span><span>PID + feed-forward</span><span>COBS · CRC-16</span><span>GoogleTest</span></p>
+        <p class="links"><a class="btn small" href="https://github.com/gurmaan-singh/motionkit">Source</a></p>
       </div>
     </article>
   </section>
