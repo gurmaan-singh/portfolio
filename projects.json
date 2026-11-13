@@ -625,5 +625,162 @@
     "ctest --test-dir build -C Release"
    ]
   }
+ },
+ {
+  "id": "pidlab",
+  "name": "pidlab",
+  "area": "Control",
+  "lang": "Python",
+  "tests": 13,
+  "lead": "Four ways to tune a loop, and what each one costs.",
+  "desc": "A PID with derivative on the measurement and conditional-integration anti-windup, a first-order-plus-dead-time plant and a mass-spring-damper, a two-point model fit, a relay autotuner, and the Ziegler-Nichols, Cohen-Coon and SIMC rules run on the same plant so the table is measured, not copied.",
+  "nums": [
+   [
+    "4 %",
+    "overshoot with SIMC on a setpoint step, where Ziegler-Nichols gives 66 % and Cohen-Coon 86 %"
+   ],
+   [
+    "3.5 vs 4.3",
+    "ultimate gain from the relay against the exact phase-crossover value: the describing function is an approximation and the README says so"
+   ]
+  ],
+  "note": {
+   "title": "Worth knowing",
+   "text": "Ziegler-Nichols and Cohen-Coon are rules for load disturbances, so on a setpoint step they overshoot by a lot. The derivative acts on the measurement, so a setpoint step does not kick the output; a test checks exactly that."
+  },
+  "figs": [
+   {
+    "src": "assets/fig/pidlab-tunings.png",
+    "caption": "Setpoint step on K = 2, T = 5 s, L = 1 s with four tuning rules.",
+    "w": 1040,
+    "h": 520
+   },
+   {
+    "src": "assets/fig/pidlab-relay.png",
+    "caption": "Relay feedback: the limit cycle gives the ultimate gain and period.",
+    "w": 1040,
+    "h": 520
+   },
+   {
+    "src": "assets/fig/pidlab-disturbance.png",
+    "caption": "A load disturbance at 40 s: the aggressive rule recovers faster, as it was designed to.",
+    "w": 1040,
+    "h": 468
+   }
+  ],
+  "demo": {
+   "kind": "replay",
+   "player": "lines",
+   "data": "pidlab",
+   "label": "Replay of the recorded setpoint step: three tuning rules on the same plant (K = 2, T = 5 s, L = 1 s).",
+   "opts": {
+    "x": "t",
+    "xunit": "s",
+    "yunit": "",
+    "dur": 15,
+    "series": [
+     [
+      "simc",
+      "SIMC",
+      "red"
+     ],
+     [
+      "zn",
+      "Ziegler-Nichols",
+      "bone"
+     ],
+     [
+      "cc",
+      "Cohen-Coon",
+      "dim"
+     ]
+    ]
+   }
+  },
+  "run": {
+   "needs": "Python 3.10 or newer. NumPy; Matplotlib only for the figures.",
+   "cmds": [
+    "pip install -e .[dev]",
+    "pytest",
+    "python scripts/make_figures.py"
+   ]
+  },
+  "repo": "https://github.com/gurmaan-singh/pidlab"
+ },
+ {
+  "id": "imufuse",
+  "name": "imufuse",
+  "area": "Sensing & tracking",
+  "lang": "C++20",
+  "tests": 15,
+  "lead": "Which way is up, from a gyro, an accelerometer and a compass.",
+  "desc": "Three attitude filters with one interface: a complementary filter on Euler angles, Mahony's PI feedback, and a multiplicative EKF with a gyro-bias state. Header-only, no dependencies, scored on the same synthetic flight with noise and a biased gyro.",
+  "nums": [
+   [
+    "0.13°",
+    "RMS attitude error of the EKF on the flight; the complementary filter gives 0.52°, Mahony 1.09°"
+   ],
+   [
+    "0.0001",
+    "rad/s of gyro-bias error left by the EKF, from a true bias of 0.027"
+   ]
+  ],
+  "note": {
+   "title": "What went wrong",
+   "text": "Splitting the error into tilt and heading by subtracting Euler angles reported a 7° tilt error for a filter that was 0.13° off: roll wraps and pitch near 90° makes the angles jump. The split now compares the two up vectors in the body frame instead."
+  },
+  "figs": [
+   {
+    "src": "assets/fig/imufuse-errors.png",
+    "caption": "All three filters start 60° off. Left: the first 8 s. Right: the steady state with a 0.027 rad/s gyro bias.",
+    "w": 1170,
+    "h": 468
+   },
+   {
+    "src": "assets/fig/imufuse-no-mag.png",
+    "caption": "Magnetometer switched off: the EKF keeps its tilt to 0.09° but its heading has nothing to observe it.",
+    "w": 1170,
+    "h": 442
+   }
+  ],
+  "demo": {
+   "kind": "replay",
+   "player": "lines",
+   "data": "imufuse",
+   "label": "Replay of the recorded run: attitude error of the three filters, starting 60° off, on the same flight.",
+   "opts": {
+    "x": "t",
+    "xunit": "s",
+    "yunit": "°",
+    "dur": 20,
+    "series": [
+     [
+      "ekf",
+      "multiplicative EKF",
+      "red"
+     ],
+     [
+      "mahony",
+      "Mahony",
+      "bone"
+     ],
+     [
+      "complementary",
+      "complementary",
+      "dim"
+     ]
+    ]
+   }
+  },
+  "run": {
+   "needs": "CMake 3.24 or newer and a C++20 compiler (MSVC 2022, GCC 12 or Clang 15).",
+   "cmds": [
+    "cmake -S . -B build",
+    "cmake --build build --config Release",
+    "ctest --test-dir build -C Release",
+    "build/Release/imufuse_sim --csv out/errors.csv"
+   ]
+  },
+  "repo": "https://github.com/gurmaan-singh/imufuse"
  }
 ]
