@@ -1,0 +1,629 @@
+[
+ {
+  "id": "vakt",
+  "name": "vakt",
+  "area": "Sensing & tracking",
+  "lang": "C++20",
+  "tests": 34,
+  "lead": "A radar tracker that keeps its tracks through a turn.",
+  "desc": "Tracks several targets from noisy radar plots with a bank of Kalman filters that mixes a straight-line model and a turning model (IMM), and runs it against a single-model filter on a manoeuvring-jet scenario with Monte Carlo trials.",
+  "nums": [
+   [
+    "124 m",
+    "mean error with the mixed-model filter, against 144 m for one model"
+   ],
+   [
+    "60 / 271",
+    "identity switches, mixed against single model"
+   ]
+  ],
+  "note": null,
+  "figs": [
+   {
+    "src": "assets/fig/vakt-manoeuvre.png",
+    "w": 1511,
+    "h": 636,
+    "caption": "The manoeuvre scenario from above, and tracking error over the run. Red is the mixed-model filter, white a single constant-velocity model."
+   }
+  ],
+  "repo": "https://github.com/gurmaan-singh/vakt",
+  "demo": {
+   "kind": "replay",
+   "player": "lines",
+   "data": "vakt",
+   "label": "Replay of the recorded Monte Carlo run: tracking error against time for the two filters.",
+   "opts": {
+    "x": "t",
+    "xunit": "s",
+    "yunit": "m",
+    "dur": 24,
+    "series": [
+     [
+      "gospa_imm",
+      "mixed-model (IMM)",
+      "red"
+     ],
+     [
+      "gospa_cv",
+      "single model (CV)",
+      "bone"
+     ]
+    ]
+   }
+  },
+  "run": {
+   "needs": "CMake 3.24 or newer and a C++20 compiler (MSVC 2022, GCC 12 or Clang 15).",
+   "cmds": [
+    "cmake -S . -B build",
+    "cmake --build build --config Release",
+    "ctest --test-dir build -C Release"
+   ]
+  }
+ },
+ {
+  "id": "lagesbild",
+  "name": "lägesbild",
+  "area": "Operations picture",
+  "lang": "TypeScript",
+  "tests": 31,
+  "lead": "One map for everything that is out there.",
+  "desc": "A web map that merges tracks from several feeds: the vakt tracker over UDP, live ADS-B aircraft from OpenSky, an AIS ship-message decoder and a scripted demo. Symbols follow APP-6, and anything entering a restricted zone raises an alert.",
+  "nums": [
+   [
+    "25",
+    "live aircraft came through the server to a browser in the end-to-end check"
+   ]
+  ],
+  "note": {
+   "title": "What went wrong",
+   "text": "The map's first tile provider began asking for an API key, so it now uses OpenStreetMap directly. The static file server crashed on a request for a file that did not exist, because it had already sent its headers. The AIS feed it was meant to read was unreachable, so that decoder is tested on recorded sentences only."
+  },
+  "figs": [
+   {
+    "src": "assets/fig/lagesbild-overview.png",
+    "w": 1500,
+    "h": 900,
+    "caption": "The demo picture over the Baltic: restricted zones, tracks by affiliation, and the alert feed."
+   }
+  ],
+  "repo": "https://github.com/gurmaan-singh/lagesbild",
+  "demo": {
+   "kind": "shot",
+   "src": "assets/fig/lagesbild-overview.png",
+   "label": "Screenshot of the running app. It streams tracks over a WebSocket from its own server, so it does not run inside this page."
+  },
+  "run": {
+   "needs": "Node 20 or newer.",
+   "cmds": [
+    "npm install",
+    "npm start   # builds, then serves the demo on http://localhost:8080"
+   ]
+  }
+ },
+ {
+  "id": "hover",
+  "name": "hover",
+  "area": "Flight & control",
+  "lang": "Python",
+  "tests": 23,
+  "lead": "A drone that has to fly and know where it is.",
+  "desc": "Rigid-body physics, a motor model, a 15-state error-state Kalman filter running on simulated sensors, and a cascaded PID controller. It flies a figure of eight through wind gusts and keeps flying with a weak motor.",
+  "nums": [
+   [
+    "0.10 m",
+    "rms position error on the figure of eight"
+   ],
+   [
+    "0.3°",
+    "attitude error of the filter"
+   ]
+  ],
+  "note": {
+   "title": "What went wrong",
+   "text": "A drone sitting on the floor has an accelerometer that reads zero, so the filter started 95° out and never came back. The simulated floor now pushes back like a real one, and the drone idles on the ground until it is told to fly."
+  },
+  "figs": [
+   {
+    "src": "assets/fig/hover-flight.gif",
+    "w": 528,
+    "h": 220,
+    "caption": "The flight, replayed."
+   },
+   {
+    "src": "assets/fig/hover-figure8.png",
+    "w": 1198,
+    "h": 530,
+    "caption": "Figure of eight against its reference, and the tracking error over 32 seconds."
+   }
+  ],
+  "repo": "https://github.com/gurmaan-singh/hover",
+  "demo": {
+   "kind": "replay",
+   "player": "hover",
+   "data": "hover",
+   "label": "Replay of a recorded flight: the figure of eight from above, the filter's estimate against the truth, and altitude.",
+   "opts": {
+    "dur": 32
+   }
+  },
+  "run": {
+   "needs": "Python 3.12 or newer. NumPy; Matplotlib only for the figures.",
+   "cmds": [
+    "pip install -e .[dev]",
+    "pytest",
+    "python scripts/make_figures.py"
+   ]
+  }
+ },
+ {
+  "id": "kartlagg",
+  "name": "kartlagg",
+  "area": "Sensing & tracking",
+  "lang": "Python",
+  "tests": 17,
+  "lead": "Where am I, and what does this room look like?",
+  "desc": "A particle filter that localises a robot on a known map from a 2D lidar, and grid SLAM that builds the map while it estimates the path. The office, the lidar and the wheel odometry noise are all simulated.",
+  "nums": [
+   [
+    "0.21 m",
+    "SLAM position error, against 1.38 m from wheel odometry alone"
+   ],
+   [
+    "7 / 10",
+    "global localisations that succeed with 1000 particles; a plain particle filter is not reliable here and the write-up says so"
+   ]
+  ],
+  "note": {
+   "title": "What went wrong",
+   "text": "Lidar beams that hit nothing return their maximum range, and the first mapper took that as proof of free space and carved doorways through solid walls. Maximum-range beams are now ignored when mapping."
+  },
+  "figs": [
+   {
+    "src": "assets/fig/kartlagg-slam.png",
+    "w": 1807,
+    "h": 402,
+    "caption": "True map and path; the map from odometry alone (F1 0.49); the map from particle-filter SLAM (F1 0.93)."
+   },
+   {
+    "src": "assets/fig/kartlagg-mcl.gif",
+    "w": 504,
+    "h": 312,
+    "caption": "A particle filter converging on the robot's position."
+   }
+  ],
+  "repo": "https://github.com/gurmaan-singh/kartlagg",
+  "demo": {
+   "kind": "replay",
+   "player": "kartlagg",
+   "data": "kartlagg",
+   "label": "Replay of a recorded run through the office: the true path, wheel odometry, and the particle-filter SLAM estimate.",
+   "opts": {
+    "dur": 25
+   }
+  },
+  "run": {
+   "needs": "Python 3.12 or newer. NumPy; Matplotlib only for the figures.",
+   "cmds": [
+    "pip install -e .[dev]",
+    "pytest",
+    "python scripts/make_figures.py"
+   ]
+  }
+ },
+ {
+  "id": "trajopt",
+  "name": "trajopt",
+  "area": "Flight & control",
+  "lang": "Python",
+  "tests": 17,
+  "lead": "Make a system move the best way, then keep it there.",
+  "desc": "Iterative LQR trajectory optimisation with actuator limits, and a model-predictive controller that replans each step with a fallback plan. Swing-ups for a pendulum and a cart-pole, a car parking between obstacles, a planar quadrotor flying through gates.",
+  "nums": [
+   [
+    "4 / 4",
+    "systems solved: pendulum, cart-pole, car, quadrotor"
+   ],
+   [
+    "10-20 %",
+    "model error the controller tolerates, plus a shove mid-flight"
+   ]
+  ],
+  "note": {
+   "title": "What went wrong",
+   "text": "The optimiser sat at the hanging position, where the gradient is zero, so it now starts from a pumped swing or an LQR guess. Saturated controls broke the line search until the backward pass learned about the limits. A sign error in the cart-pole took a full re-derivation to find."
+  },
+  "figs": [
+   {
+    "src": "assets/fig/trajopt-cartpole.gif",
+    "w": 525,
+    "h": 238,
+    "caption": "The cart-pole swing-up the optimiser found."
+   },
+   {
+    "src": "assets/fig/trajopt-quad.png",
+    "w": 948,
+    "h": 307,
+    "caption": "A planar quadrotor flies through four gates and stops at the last."
+   }
+  ],
+  "repo": "https://github.com/gurmaan-singh/trajopt",
+  "demo": {
+   "kind": "replay",
+   "player": "cartpole",
+   "data": "cartpole",
+   "label": "Replay of the cart-pole swing-up the optimiser found: 100 steps of 50 ms, actuator limits on.",
+   "opts": {
+    "dur": 5
+   }
+  },
+  "run": {
+   "needs": "Python 3.12 or newer. NumPy; Matplotlib only for the figures.",
+   "cmds": [
+    "pip install -e .[dev]",
+    "pytest",
+    "python scripts/make_figures.py"
+   ]
+  }
+ },
+ {
+  "id": "labyrint",
+  "name": "labyrint",
+  "area": "Planning",
+  "lang": "TypeScript",
+  "tests": 24,
+  "lead": "Pathfinding, with the working shown.",
+  "desc": "A*, jump point search, Theta*, D* Lite and eight maze generators in one small TypeScript library, with a benchmark and a visualiser that runs in the browser. The red line at the top of this page is this A*.",
+  "nums": [
+   [
+    "11x",
+    "fewer cells expanded by jump point search than A* on cave maps"
+   ],
+   [
+    "7x",
+    "less work for D* Lite than replanning from scratch when the map changes"
+   ]
+  ],
+  "note": {
+   "title": "What went wrong",
+   "text": "D* Lite stopped early whenever two priorities tied in floating point and returned a route that was not the shortest; a tolerance on the comparison fixed it. Jump point search was no faster than A* until it got direction pruning."
+  },
+  "figs": [
+   {
+    "src": "assets/fig/labyrint-compare.png",
+    "w": 1400,
+    "h": 900,
+    "caption": "The visualiser comparing algorithms on a scattered-obstacle map."
+   }
+  ],
+  "repo": "https://github.com/gurmaan-singh/labyrint",
+  "demo": {
+   "kind": "iframe",
+   "src": "labyrint/index.html",
+   "poster": "assets/fig/labyrint-compare.png",
+   "label": "Live: the library's own code, built from the repository and running in this page."
+  },
+  "run": {
+   "needs": "Node 20 or newer.",
+   "cmds": [
+    "npm install",
+    "npm run build",
+    "npm run serve   # open http://localhost:8080"
+   ]
+  }
+ },
+ {
+  "id": "rudp",
+  "name": "rudp",
+  "area": "Networks",
+  "lang": "C++20",
+  "tests": 28,
+  "lead": "A reliable stream on top of an unreliable one.",
+  "desc": "Sliding window, selective acknowledgements, retransmission timeouts and congestion control, tested on a deterministic network simulator that drops, delays, reorders and corrupts packets, plus a file-transfer demo over real sockets.",
+  "nums": [
+   [
+    "89 %",
+    "of a bottleneck link used with congestion control"
+   ],
+   [
+    "38 %",
+    "with it switched off"
+   ]
+  ],
+  "note": {
+   "title": "What went wrong",
+   "text": "Round-trip samples included the time a packet spent waiting in the sender's own queue, so the timeout kept growing until it never fired. Packets now carry a timestamp that the receiver echoes back, and the sample comes from that."
+  },
+  "figs": [
+   {
+    "src": "assets/fig/rudp-sawtooth.png",
+    "w": 1219,
+    "h": 480,
+    "caption": "One flow through a 1 MB/s bottleneck with a 60 KB queue: the congestion window and the bytes in flight."
+   }
+  ],
+  "repo": "https://github.com/gurmaan-singh/rudp",
+  "demo": {
+   "kind": "replay",
+   "player": "lines",
+   "data": "rudp",
+   "label": "Replay of the recorded trace: one flow through a 1 MB/s bottleneck with a 60 KB queue.",
+   "opts": {
+    "x": "t",
+    "xunit": "s",
+    "yunit": "B",
+    "dur": 20,
+    "series": [
+     [
+      "cwnd",
+      "congestion window",
+      "red"
+     ],
+     [
+      "in_flight",
+      "bytes in flight",
+      "bone"
+     ]
+    ]
+   }
+  },
+  "run": {
+   "needs": "CMake 3.24 or newer and a C++20 compiler (MSVC 2022, GCC 12 or Clang 15).",
+   "cmds": [
+    "cmake -S . -B build",
+    "cmake --build build --config Release",
+    "ctest --test-dir build -C Release",
+    "build/Release/rudp_sim --bytes 4000000 --rtt 80 --loss 0.02 --reorder 0.1 --corrupt 0.01"
+   ]
+  }
+ },
+ {
+  "id": "cansim",
+  "name": "cansim",
+  "area": "Networks",
+  "lang": "C++20",
+  "tests": 35,
+  "lead": "The CAN bus, one bit at a time.",
+  "desc": "Frames with bit stuffing and CRC-15, arbitration between nodes, error counters that take a node off the bus, and J1939 identifiers. Simulated nodes share one wire and have to sort it out themselves.",
+  "nums": [
+   [
+    "135 / 160",
+    "worst-case bit counts that match the known figures"
+   ],
+   [
+    "40",
+    "random multi-node scenarios, all clean"
+   ]
+  ],
+  "note": {
+   "title": "What went wrong",
+   "text": "A frame was missing the stuff bit after the last CRC bit, so receivers saw form errors on perfectly good frames."
+  },
+  "figs": [
+   {
+    "src": "assets/fig/cansim-arbitration.png",
+    "w": 1285,
+    "h": 636,
+    "caption": "Three nodes start at the same moment; the lowest identifier keeps the bus."
+   }
+  ],
+  "repo": "https://github.com/gurmaan-singh/cansim",
+  "demo": {
+   "kind": "live",
+   "widget": "arb",
+   "label": "Live: a small JavaScript version of CAN arbitration, written for this page. The C++ library does the real thing, bit stuffing and CRC included."
+  },
+  "run": {
+   "needs": "CMake 3.24 or newer and a C++20 compiler (MSVC 2022, GCC 12 or Clang 15).",
+   "cmds": [
+    "cmake -S . -B build",
+    "cmake --build build --config Release",
+    "ctest --test-dir build -C Release"
+   ]
+  }
+ },
+ {
+  "id": "rtsched",
+  "name": "rtsched",
+  "area": "Real-time",
+  "lang": "Python",
+  "tests": 22,
+  "lead": "Will every deadline be met, and can you prove it?",
+  "desc": "A scheduling simulator and the mathematics that predicts it: rate-monotonic and earliest-deadline-first, response-time analysis, priority inheritance and priority ceiling. The tests force the two to agree. Includes the priority inversion that stalled the Mars Pathfinder lander.",
+  "nums": [
+   [
+    "400",
+    "random task sets where analysis and simulation give the same answer"
+   ],
+   [
+    "19 > 9",
+    "ticks for the high-priority task in the Pathfinder case, without and with a protocol"
+   ]
+  ],
+  "note": {
+   "title": "What went wrong",
+   "text": "When blocking alone was longer than a task's deadline, the response-time function still returned a number past the deadline instead of saying the task cannot be scheduled. It now returns nothing."
+  },
+  "figs": [
+   {
+    "src": "assets/fig/rtsched-inversion.png",
+    "w": 1286,
+    "h": 688,
+    "caption": "The same three tasks with no protocol, with priority inheritance and with the immediate ceiling protocol."
+   }
+  ],
+  "repo": "https://github.com/gurmaan-singh/rtsched",
+  "demo": {
+   "kind": "replay",
+   "player": "rtsched",
+   "data": "rtsched",
+   "label": "Replay of the Pathfinder case: the same three tasks with no protocol, with priority inheritance and with the immediate ceiling protocol.",
+   "opts": {
+    "dur": 12
+   }
+  },
+  "run": {
+   "needs": "Python 3.12 or newer. NumPy; Matplotlib only for the figures.",
+   "cmds": [
+    "pip install -e .[dev]",
+    "pytest",
+    "python scripts/make_figures.py"
+   ]
+  }
+ },
+ {
+  "id": "plcsim",
+  "name": "plcsim",
+  "area": "Real-time",
+  "lang": "Python",
+  "tests": 74,
+  "lead": "A PLC language, interpreted.",
+  "desc": "IEC 61131-3 Structured Text: a lexer, parser, type checker and an interpreter that runs a real scan cycle with timers, edge detection and function blocks, closed around a simulated mixing tank.",
+  "nums": [
+   [
+    "74",
+    "tests, the most of any repository here"
+   ],
+   [
+    "25",
+    "random operator scripts, none of which break the safety rules"
+   ]
+  ],
+  "note": {
+   "title": "What went wrong",
+   "text": "The example program worked out 'batch done' before it updated its own counter, so a batch finished one cycle late."
+  },
+  "figs": [
+   {
+    "src": "assets/fig/plcsim-batches.png",
+    "w": 1286,
+    "h": 662,
+    "caption": "Two batches under the Structured Text program: tank level above, valves below."
+   }
+  ],
+  "repo": "https://github.com/gurmaan-singh/plcsim",
+  "demo": {
+   "kind": "replay",
+   "player": "plcsim",
+   "data": "plcsim",
+   "label": "Replay of a recorded run: the mixing tank under the Structured Text program, one scan per second.",
+   "opts": {
+    "dur": 20
+   }
+  },
+  "run": {
+   "needs": "Python 3.12 or newer.",
+   "cmds": [
+    "pip install -e .[dev]",
+    "pytest",
+    "plcsim check examples/mixer.st",
+    "plcsim run examples/mixer.st --scans 4 --dt 100 --set Level=0 --set Start=TRUE --watch State,ValveA,Alarm"
+   ]
+  }
+ },
+ {
+  "id": "camlab",
+  "name": "camlab",
+  "area": "Sensing & tracking",
+  "lang": "Python",
+  "tests": 26,
+  "lead": "Camera calibration, from scratch.",
+  "desc": "Finds a camera's focal length, centre and lens distortion from photographs of a checkerboard, estimates pose from known points (PnP) and recovers the geometry between two views with RANSAC. NumPy underneath, nothing else.",
+  "nums": [
+   [
+    "0.12 %",
+    "error in focal length from 15 views with 0.3 px of noise"
+   ]
+  ],
+  "note": {
+   "title": "What went wrong",
+   "text": "The RANSAC iteration count overflowed when nearly every point was an inlier, because the formula takes the log of something close to zero. It is now computed with log1p. Calibration also detects degenerate views and refuses them."
+  },
+  "figs": [
+   {
+    "src": "assets/fig/camlab-distortion.png",
+    "w": 1186,
+    "h": 431,
+    "caption": "What the lens does to a square grid, and the grid after undoing the estimated distortion."
+   }
+  ],
+  "repo": "https://github.com/gurmaan-singh/camlab",
+  "demo": {
+   "kind": "fig",
+   "src": "assets/fig/camlab-distortion.png",
+   "label": "Figure from a run. The calibration works on images of a checkerboard, so there is no in-page demo."
+  },
+  "run": {
+   "needs": "Python 3.12 or newer. NumPy; Matplotlib only for the figures.",
+   "cmds": [
+    "pip install -e .[dev]",
+    "pytest",
+    "python scripts/make_figures.py"
+   ]
+  }
+ },
+ {
+  "id": "motionkit",
+  "name": "motionkit",
+  "area": "Flight & control",
+  "lang": "C11",
+  "tests": 33,
+  "lead": "Building blocks for a motor-control board.",
+  "desc": "Jerk-limited S-curve motion profiles, a PID controller, encoder decoding, a ring buffer and COBS plus CRC framing for a serial link, with a simulated DC motor to run it all against.",
+  "nums": [
+   [
+    "10x",
+    "smaller tracking error with profile feed-forward than with feedback alone"
+   ]
+  ],
+  "note": {
+   "title": "Still open",
+   "text": "It has only run on a PC. It has never been built for a microcontroller, so timing and memory on a real board are untested."
+  },
+  "figs": [
+   {
+    "src": "assets/fig/motionkit-scurve.png",
+    "w": 958,
+    "h": 922,
+    "caption": "A jerk-limited move of 10 rad: acceleration never jumps."
+   }
+  ],
+  "repo": "https://github.com/gurmaan-singh/motionkit",
+  "demo": {
+   "kind": "replay",
+   "player": "lines",
+   "data": "motionkit",
+   "label": "Replay of a recorded move: position, velocity and acceleration of a jerk-limited profile, each scaled to its own maximum.",
+   "opts": {
+    "x": "t",
+    "xunit": "s",
+    "norm": true,
+    "dur": 8,
+    "series": [
+     [
+      "pos",
+      "position",
+      "bone"
+     ],
+     [
+      "vel",
+      "velocity",
+      "dim"
+     ],
+     [
+      "acc",
+      "acceleration",
+      "red"
+     ]
+    ]
+   }
+  },
+  "run": {
+   "needs": "CMake and a C11 compiler.",
+   "cmds": [
+    "cmake -S . -B build",
+    "cmake --build build --config Release",
+    "ctest --test-dir build -C Release"
+   ]
+  }
+ }
+]
