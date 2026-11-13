@@ -3,279 +3,160 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Gurmaan Singh: tracking, control and networking projects</title>
-<meta name="description" content="Gurmaan Singh, mechatronics engineering student at Fontys. A radar tracker, a quadrotor flight-controller simulator, a reliable transport protocol over UDP, a pathfinding lab, a situational-picture map, robot localisation and SLAM, motor-control firmware building blocks, trajectory optimisation, a PLC-language interpreter, camera geometry, the CAN bus, and real-time scheduling, each with tests and written-up design notes.">
-<meta name="theme-color" content="#050505">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23050505'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e0122b' stroke-width='2'/%3E%3Cpath d='M16 16 L25 9' stroke='%23e0122b' stroke-width='2'/%3E%3C/svg%3E">
+<title>Gurmaan Singh</title>
+<meta name="description" content="Mechatronics student. Twelve software projects about sensing, deciding and moving: trackers, controllers, protocols and the tools to see what they are doing.">
+<meta name="theme-color" content="#0a0b0c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;700&display=swap">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<a class="skip" href="#work">Skip to projects</a>
+<a class="skip" href="#list">Skip to the projects</a>
+<nav class="rail" aria-label="Projects">
+  <a class="who" href="#top">GURMAAN SINGH</a>
+  <ol><li><a href="#vakt" aria-label="vakt"><span>vakt</span></a></li><li><a href="#lagesbild" aria-label="lägesbild"><span>lägesbild</span></a></li><li><a href="#hover" aria-label="hover"><span>hover</span></a></li><li><a href="#kartlagg" aria-label="kartlagg"><span>kartlagg</span></a></li><li><a href="#trajopt" aria-label="trajopt"><span>trajopt</span></a></li><li><a href="#labyrint" aria-label="labyrint"><span>labyrint</span></a></li><li><a href="#rudp" aria-label="rudp"><span>rudp</span></a></li><li><a href="#cansim" aria-label="cansim"><span>cansim</span></a></li><li><a href="#rtsched" aria-label="rtsched"><span>rtsched</span></a></li><li><a href="#plcsim" aria-label="plcsim"><span>plcsim</span></a></li><li><a href="#camlab" aria-label="camlab"><span>camlab</span></a></li><li><a href="#motionkit" aria-label="motionkit"><span>motionkit</span></a></li></ol>
+  <span class="end">12</span>
+</nav>
 
-<header class="top">
-  <a class="brand" href="#top">GS<span>_</span></a>
-  <nav aria-label="Main">
-    <a href="#work">Projects</a>
-    <a href="#how">How I work</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
-  </nav>
+<header class="hero" id="top">
+  <canvas id="field" aria-hidden="true"></canvas>
+  <div class="top mono"><span>Gurmaan Singh / mechatronics, Fontys</span><span class="status">Looking for a summer 2027 job</span></div>
+  <h1>Software that<br>makes machines<br>behave<em>.</em></h1>
+  <div class="row">
+    <p class="intro">Twelve projects about sensing, deciding and moving: trackers, controllers, protocols, and the tools to see what they are doing. Each one has tests and a README that says what the project cannot do.</p>
+    <p class="live mono" id="live"></p>
+  </div>
 </header>
 
-<main id="top">
-  <section class="hero">
-    <canvas id="radar" aria-hidden="true"></canvas>
-    <div class="hero-text">
-      <p class="eyebrow">Mechatronics engineering, Fontys</p>
-      <h1>Gurmaan Singh</h1>
-      <p class="lead">I build systems that sense, decide and act: trackers, controllers, protocols and the tools to see what they are doing. Twelve projects, each with tests and the design notes behind it.</p>
-      <p class="cta"><a class="btn primary" href="#work">See the work</a> <a class="btn" href="https://github.com/gurmaan-singh">GitHub</a></p>
-    </div>
-    <ul class="facts" aria-label="At a glance">
-      <li><b>12</b><span>projects with write-ups</span></li>
-      <li><b>364</b><span>automated tests</span></li>
-      <li><b>C++20</b><span>Python / TypeScript</span></li>
-      <li><b>2027</b><span>available for a summer job</span></li>
+<main>
+<section class="block" id="list">
+  <div class="sec-head"><h2>The twelve</h2><span class="mono">hover for a look, click to jump</span></div>
+  <div class="list">
+<a class="row-link" href="#vakt"><span class="n">vakt</span><span class="d">A radar tracker that keeps its tracks through a turn.</span><span class="m mono">C++20 / 34 tests</span></a>
+<a class="row-link" href="#lagesbild"><span class="n">lägesbild</span><span class="d">One map for everything that is out there.</span><span class="m mono">TypeScript / 31 tests</span></a>
+<a class="row-link" href="#hover"><span class="n">hover</span><span class="d">A drone that has to fly and know where it is.</span><span class="m mono">Python / 23 tests</span></a>
+<a class="row-link" href="#kartlagg"><span class="n">kartlagg</span><span class="d">Where am I, and what does this room look like?</span><span class="m mono">Python / 17 tests</span></a>
+<a class="row-link" href="#trajopt"><span class="n">trajopt</span><span class="d">Make a system move the best way, then keep it there.</span><span class="m mono">Python / 17 tests</span></a>
+<a class="row-link" href="#labyrint"><span class="n">labyrint</span><span class="d">Pathfinding, with the working shown.</span><span class="m mono">TypeScript / 24 tests</span></a>
+<a class="row-link" href="#rudp"><span class="n">rudp</span><span class="d">A reliable stream on top of an unreliable one.</span><span class="m mono">C++20 / 28 tests</span></a>
+<a class="row-link" href="#cansim"><span class="n">cansim</span><span class="d">The CAN bus, one bit at a time.</span><span class="m mono">C++20 / 35 tests</span></a>
+<a class="row-link" href="#rtsched"><span class="n">rtsched</span><span class="d">Will every deadline be met, and can you prove it?</span><span class="m mono">Python / 22 tests</span></a>
+<a class="row-link" href="#plcsim"><span class="n">plcsim</span><span class="d">A PLC language, interpreted.</span><span class="m mono">Python / 74 tests</span></a>
+<a class="row-link" href="#camlab"><span class="n">camlab</span><span class="d">Camera calibration, from scratch.</span><span class="m mono">Python / 26 tests</span></a>
+<a class="row-link" href="#motionkit"><span class="n">motionkit</span><span class="d">Building blocks for a motor-control board.</span><span class="m mono">C11 / 33 tests</span></a>
+  </div>
+</section>
+
+<article class="entry v-r" id="vakt">
+  <header class="eh"><p class="kind mono">Sensing &amp; tracking<i>/</i>C++20<i>/</i>34 tests</p><h2>vakt</h2></header>
+  <div class="copy"><div class="txt"><p class="lead">A radar tracker that keeps its tracks through a turn.</p><p>Tracks several targets from noisy radar plots with a bank of Kalman filters that mixes a straight-line model and a turning model (IMM), and runs it against a single-model filter on a manoeuvring-jet scenario with Monte Carlo trials.</p></div><div class="more"><dl class="nums"><div><dt>124 m</dt><dd>mean error with the mixed-model filter, against 144 m for one model</dd></div><div><dt>60 / 271</dt><dd>identity switches, mixed against single model</dd></div></dl><p class="links"><a href="https://github.com/gurmaan-singh/vakt">Repository &#8599;</a></p></div></div>
+  <div class="figs">
+<figure><img src="assets/fig/vakt-manoeuvre.png" width="1511" height="636" loading="lazy" alt="vakt: The manoeuvre scenario from above, and tracking error over the run. Red is the mixed-model filter, white a single constant-velocity model."><figcaption>The manoeuvre scenario from above, and tracking error over the run. Red is the mixed-model filter, white a single constant-velocity model.</figcaption></figure>
+  </div>
+</article>
+<article class="entry v-w alt" id="lagesbild">
+  <header class="eh"><p class="kind mono">Operations picture<i>/</i>TypeScript<i>/</i>31 tests</p><h2>lägesbild</h2></header>
+  <div class="copy"><div class="txt"><p class="lead">One map for everything that is out there.</p><p>A web map that merges tracks from several feeds: the vakt tracker over UDP, live ADS-B aircraft from OpenSky, an AIS ship-message decoder and a scripted demo. Symbols follow APP-6, and anything entering a restricted zone raises an alert.</p></div><div class="more"><dl class="nums"><div><dt>25</dt><dd>live aircraft came through the server to a browser in the end-to-end check</dd></div></dl><aside class="note"><h3>What went wrong</h3><p>The map&#x27;s first tile provider began asking for an API key, so it now uses OpenStreetMap directly. The static file server crashed on a request for a file that did not exist, because it had already sent its headers. The AIS feed it was meant to read was unreachable, so that decoder is tested on recorded sentences only.</p></aside><p class="links"><a href="https://github.com/gurmaan-singh/lagesbild">Repository &#8599;</a></p></div></div>
+  <div class="figs">
+<figure><img src="assets/fig/lagesbild-overview.png" width="1500" height="900" loading="lazy" alt="lägesbild: The demo picture over the Baltic: restricted zones, tracks by affiliation, and the alert feed."><figcaption>The demo picture over the Baltic: restricted zones, tracks by affiliation, and the alert feed.</figcaption></figure>
+  </div>
+</article>
+<article class="entry v-l" id="hover">
+  <header class="eh"><p class="kind mono">Flight &amp; control<i>/</i>Python<i>/</i>23 tests</p><h2>hover</h2></header>
+  <div class="copy"><div class="txt"><p class="lead">A drone that has to fly and know where it is.</p><p>Rigid-body physics, a motor model, a 15-state error-state Kalman filter running on simulated sensors, and a cascaded PID controller. It flies a figure of eight through wind gusts and keeps flying with a weak motor.</p></div><div class="more"><dl class="nums"><div><dt>0.10 m</dt><dd>rms position error on the figure of eight</dd></div><div><dt>0.3°</dt><dd>attitude error of the filter</dd></div></dl><aside class="note"><h3>What went wrong</h3><p>A drone sitting on the floor has an accelerometer that reads zero, so the filter started 95° out and never came back. The simulated floor now pushes back like a real one, and the drone idles on the ground until it is told to fly.</p></aside><p class="links"><a href="https://github.com/gurmaan-singh/hover">Repository &#8599;</a></p></div></div>
+  <div class="figs">
+<figure><img src="assets/fig/hover-flight.gif" width="528" height="220" loading="lazy" alt="hover: The flight, replayed."><figcaption>The flight, replayed.</figcaption></figure>
+<figure><img src="assets/fig/hover-figure8.png" width="1198" height="530" loading="lazy" alt="hover: Figure of eight against its reference, and the tracking error over 32 seconds."><figcaption>Figure of eight against its reference, and the tracking error over 32 seconds.</figcaption></figure>
+  </div>
+</article>
+<article class="entry v-w alt" id="kartlagg">
+  <header class="eh"><p class="kind mono">Sensing &amp; tracking<i>/</i>Python<i>/</i>17 tests</p><h2>kartlagg</h2></header>
+  <div class="copy"><div class="txt"><p class="lead">Where am I, and what does this room look like?</p><p>A particle filter that localises a robot on a known map from a 2D lidar, and grid SLAM that builds the map while it estimates the path. The office, the lidar and the wheel odometry noise are all simulated.</p></div><div class="more"><dl class="nums"><div><dt>0.21 m</dt><dd>SLAM position error, against 1.38 m from wheel odometry alone</dd></div><div><dt>7 / 10</dt><dd>global localisations that succeed with 1000 particles; a plain particle filter is not reliable here and the write-up says so</dd></div></dl><aside class="note"><h3>What went wrong</h3><p>Lidar beams that hit nothing return their maximum range, and the first mapper took that as proof of free space and carved doorways through solid walls. Maximum-range beams are now ignored when mapping.</p></aside><p class="links"><a href="https://github.com/gurmaan-singh/kartlagg">Repository &#8599;</a></p></div></div>
+  <div class="figs">
+<figure><img src="assets/fig/kartlagg-slam.png" width="1807" height="402" loading="lazy" alt="kartlagg: True map and path; the map from odometry alone (F1 0.49); the map from particle-filter SLAM (F1 0.93)."><figcaption>True map and path; the map from odometry alone (F1 0.49); the map from particle-filter SLAM (F1 0.93).</figcaption></figure>
+<figure><img src="assets/fig/kartlagg-mcl.gif" width="504" height="312" loading="lazy" alt="kartlagg: A particle filter converging on the robot&#x27;s position."><figcaption>A particle filter converging on the robot&#x27;s position.</figcaption></figure>
+  </div>
+</article>
+<article class="entry v-r" id="trajopt">
+  <header class="eh"><p class="kind mono">Flight &amp; control<i>/</i>Python<i>/</i>17 tests</p><h2>trajopt</h2></header>
+  <div class="copy"><div class="txt"><p class="lead">Make a system move the best way, then keep it there.</p><p>Iterative LQR trajectory optimisation with actuator limits, and a model-predictive controller that replans each step with a fallback plan. Swing-ups for a pendulum and a cart-pole, a car parking between obstacles, a planar quadrotor flying through gates.</p></div><div class="more"><dl class="nums"><div><dt>4 / 4</dt><dd>systems solved: pendulum, cart-pole, car, quadrotor</dd></div><div><dt>10-20 %</dt><dd>model error the controller tolerates, plus a shove mid-flight</dd></div></dl><aside class="note"><h3>What went wrong</h3><p>The optimiser sat at the hanging position, where the gradient is zero, so it now starts from a pumped swing or an LQR guess. Saturated controls broke the line search until the backward pass learned about the limits. A sign error in the cart-pole took a full re-derivation to find.</p></aside><p class="links"><a href="https://github.com/gurmaan-singh/trajopt">Repository &#8599;</a></p></div></div>
+  <div class="figs">
+<figure><img src="assets/fig/trajopt-cartpole.gif" width="525" height="238" loading="lazy" alt="trajopt: The cart-pole swing-up the optimiser found."><figcaption>The cart-pole swing-up the optimiser found.</figcaption></figure>
+<figure><img src="assets/fig/trajopt-quad.png" width="948" height="307" loading="lazy" alt="trajopt: A planar quadrotor flies through four gates and stops at the last."><figcaption>A planar quadrotor flies through four gates and stops at the last.</figcaption></figure>
+  </div>
+</article>
+<article class="entry v-l alt" id="labyrint">
+  <header class="eh"><p class="kind mono">Planning<i>/</i>TypeScript<i>/</i>24 tests</p><h2>labyrint</h2></header>
+  <div class="copy"><div class="txt"><p class="lead">Pathfinding, with the working shown.</p><p>A*, jump point search, Theta*, D* Lite and eight maze generators in one small TypeScript library, with a benchmark and a visualiser that runs in the browser. The red line at the top of this page is this A*.</p></div><div class="more"><dl class="nums"><div><dt>11x</dt><dd>fewer cells expanded by jump point search than A* on cave maps</dd></div><div><dt>7x</dt><dd>less work for D* Lite than replanning from scratch when the map changes</dd></div></dl><aside class="note"><h3>What went wrong</h3><p>D* Lite stopped early whenever two priorities tied in floating point and returned a route that was not the shortest; a tolerance on the comparison fixed it. Jump point search was no faster than A* until it got direction pruning.</p></aside><p class="links"><a href="https://github.com/gurmaan-singh/labyrint">Repository &#8599;</a><a href="labyrint/">Open the live visualiser &#8599;</a></p></div></div>
+  <div class="figs">
+<figure><img src="assets/fig/labyrint-compare.png" width="1400" height="900" loading="lazy" alt="labyrint: The visualiser comparing algorithms on a scattered-obstacle map."><figcaption>The visualiser comparing algorithms on a scattered-obstacle map.</figcaption></figure>
+  </div>
+</article>
+<article class="entry v-w" id="rudp">
+  <header class="eh"><p class="kind mono">Networks<i>/</i>C++20<i>/</i>28 tests</p><h2>rudp</h2></header>
+  <div class="copy"><div class="txt"><p class="lead">A reliable stream on top of an unreliable one.</p><p>Sliding window, selective acknowledgements, retransmission timeouts and congestion control, tested on a deterministic network simulator that drops, delays, reorders and corrupts packets, plus a file-transfer demo over real sockets.</p></div><div class="more"><dl class="nums"><div><dt>89 %</dt><dd>of a bottleneck link used with congestion control</dd></div><div><dt>38 %</dt><dd>with it switched off</dd></div></dl><aside class="note"><h3>What went wrong</h3><p>Round-trip samples included the time a packet spent waiting in the sender&#x27;s own queue, so the timeout kept growing until it never fired. Packets now carry a timestamp that the receiver echoes back, and the sample comes from that.</p></aside><p class="links"><a href="https://github.com/gurmaan-singh/rudp">Repository &#8599;</a></p></div></div>
+  <div class="figs">
+<figure><img src="assets/fig/rudp-sawtooth.png" width="1219" height="480" loading="lazy" alt="rudp: One flow through a 1 MB/s bottleneck with a 60 KB queue: the congestion window and the bytes in flight."><figcaption>One flow through a 1 MB/s bottleneck with a 60 KB queue: the congestion window and the bytes in flight.</figcaption></figure>
+  </div>
+</article>
+<article class="entry v-r alt" id="cansim">
+  <header class="eh"><p class="kind mono">Networks<i>/</i>C++20<i>/</i>35 tests</p><h2>cansim</h2></header>
+  <div class="copy"><div class="txt"><p class="lead">The CAN bus, one bit at a time.</p><p>Frames with bit stuffing and CRC-15, arbitration between nodes, error counters that take a node off the bus, and J1939 identifiers. Simulated nodes share one wire and have to sort it out themselves.</p></div><div class="more"><dl class="nums"><div><dt>135 / 160</dt><dd>worst-case bit counts that match the known figures</dd></div><div><dt>40</dt><dd>random multi-node scenarios, all clean</dd></div></dl><div class="arb" id="arb" aria-label="Live CAN arbitration"><header><span class="mono">Live: arbitration</span><span class="mono">11-bit id, MSB first</span></header><div class="grid"></div><footer class="mono"></footer></div><aside class="note"><h3>What went wrong</h3><p>A frame was missing the stuff bit after the last CRC bit, so receivers saw form errors on perfectly good frames.</p></aside><p class="links"><a href="https://github.com/gurmaan-singh/cansim">Repository &#8599;</a></p></div></div>
+  <div class="figs">
+<figure><img src="assets/fig/cansim-arbitration.png" width="1285" height="636" loading="lazy" alt="cansim: Three nodes start at the same moment; the lowest identifier keeps the bus."><figcaption>Three nodes start at the same moment; the lowest identifier keeps the bus.</figcaption></figure>
+  </div>
+</article>
+<article class="entry v-w" id="rtsched">
+  <header class="eh"><p class="kind mono">Real-time<i>/</i>Python<i>/</i>22 tests</p><h2>rtsched</h2></header>
+  <div class="copy"><div class="txt"><p class="lead">Will every deadline be met, and can you prove it?</p><p>A scheduling simulator and the mathematics that predicts it: rate-monotonic and earliest-deadline-first, response-time analysis, priority inheritance and priority ceiling. The tests force the two to agree. Includes the priority inversion that stalled the Mars Pathfinder lander.</p></div><div class="more"><dl class="nums"><div><dt>400</dt><dd>random task sets where analysis and simulation give the same answer</dd></div><div><dt>19 &gt; 9</dt><dd>ticks for the high-priority task in the Pathfinder case, without and with a protocol</dd></div></dl><aside class="note"><h3>What went wrong</h3><p>When blocking alone was longer than a task&#x27;s deadline, the response-time function still returned a number past the deadline instead of saying the task cannot be scheduled. It now returns nothing.</p></aside><p class="links"><a href="https://github.com/gurmaan-singh/rtsched">Repository &#8599;</a></p></div></div>
+  <div class="figs">
+<figure><img src="assets/fig/rtsched-inversion.png" width="1286" height="688" loading="lazy" alt="rtsched: The same three tasks with no protocol, with priority inheritance and with the immediate ceiling protocol."><figcaption>The same three tasks with no protocol, with priority inheritance and with the immediate ceiling protocol.</figcaption></figure>
+  </div>
+</article>
+<article class="entry v-l alt" id="plcsim">
+  <header class="eh"><p class="kind mono">Real-time<i>/</i>Python<i>/</i>74 tests</p><h2>plcsim</h2></header>
+  <div class="copy"><div class="txt"><p class="lead">A PLC language, interpreted.</p><p>IEC 61131-3 Structured Text: a lexer, parser, type checker and an interpreter that runs a real scan cycle with timers, edge detection and function blocks, closed around a simulated mixing tank.</p></div><div class="more"><dl class="nums"><div><dt>74</dt><dd>tests, the most of any repository here</dd></div><div><dt>25</dt><dd>random operator scripts, none of which break the safety rules</dd></div></dl><aside class="note"><h3>What went wrong</h3><p>The example program worked out &#x27;batch done&#x27; before it updated its own counter, so a batch finished one cycle late.</p></aside><p class="links"><a href="https://github.com/gurmaan-singh/plcsim">Repository &#8599;</a></p></div></div>
+  <div class="figs">
+<figure><img src="assets/fig/plcsim-batches.png" width="1286" height="662" loading="lazy" alt="plcsim: Two batches under the Structured Text program: tank level above, valves below."><figcaption>Two batches under the Structured Text program: tank level above, valves below.</figcaption></figure>
+  </div>
+</article>
+<article class="entry v-w alt" id="camlab">
+  <header class="eh"><p class="kind mono">Sensing &amp; tracking<i>/</i>Python<i>/</i>26 tests</p><h2>camlab</h2></header>
+  <div class="copy"><div class="txt"><p class="lead">Camera calibration, from scratch.</p><p>Finds a camera&#x27;s focal length, centre and lens distortion from photographs of a checkerboard, estimates pose from known points (PnP) and recovers the geometry between two views with RANSAC. NumPy underneath, nothing else.</p></div><div class="more"><dl class="nums"><div><dt>0.12 %</dt><dd>error in focal length from 15 views with 0.3 px of noise</dd></div></dl><aside class="note"><h3>What went wrong</h3><p>The RANSAC iteration count overflowed when nearly every point was an inlier, because the formula takes the log of something close to zero. It is now computed with log1p. Calibration also detects degenerate views and refuses them.</p></aside><p class="links"><a href="https://github.com/gurmaan-singh/camlab">Repository &#8599;</a></p></div></div>
+  <div class="figs">
+<figure><img src="assets/fig/camlab-distortion.png" width="1186" height="431" loading="lazy" alt="camlab: What the lens does to a square grid, and the grid after undoing the estimated distortion."><figcaption>What the lens does to a square grid, and the grid after undoing the estimated distortion.</figcaption></figure>
+  </div>
+</article>
+<article class="entry v-r" id="motionkit">
+  <header class="eh"><p class="kind mono">Flight &amp; control<i>/</i>C11<i>/</i>33 tests</p><h2>motionkit</h2></header>
+  <div class="copy"><div class="txt"><p class="lead">Building blocks for a motor-control board.</p><p>Jerk-limited S-curve motion profiles, a PID controller, encoder decoding, a ring buffer and COBS plus CRC framing for a serial link, with a simulated DC motor to run it all against.</p></div><div class="more"><dl class="nums"><div><dt>10x</dt><dd>smaller tracking error with profile feed-forward than with feedback alone</dd></div></dl><aside class="note"><h3>Still open</h3><p>It has only run on a PC. It has never been built for a microcontroller, so timing and memory on a real board are untested.</p></aside><p class="links"><a href="https://github.com/gurmaan-singh/motionkit">Repository &#8599;</a></p></div></div>
+  <div class="figs">
+<figure><img src="assets/fig/motionkit-scurve.png" width="958" height="922" loading="lazy" alt="motionkit: A jerk-limited move of 10 rad: acceleration never jumps."><figcaption>A jerk-limited move of 10 rad: acceleration never jumps.</figcaption></figure>
+  </div>
+</article>
+
+<section class="block">
+  <div class="how">
+    <h2>How I work</h2>
+    <ul>
+      <li><b>Numbers come from a run</b><span>Every figure in a README was measured with a fixed seed. Where I could not measure it, I took the claim out.</span></li>
+      <li><b>The bugs are written down</b><span>Most repositories have a design note that says how the thing works and what went wrong on the way. The notes above are short versions.</span></li>
+      <li><b>Limits sit next to results</b><span>What a project does not do, and what I have not tested, is listed in its README under Limits.</span></li>
+      <li><b>Small enough to read</b><span>The largest is about 2,500 lines of source, the smallest under 500. Each has its own tests.</span></li>
     </ul>
-  </section>
-
-  <section id="work" class="section">
-    <h2><span>01</span> Selected work</h2>
-
-    <article class="project" data-reveal>
-      <div class="shot"><img src="assets/vakt.png" alt="A radar scenario: noisy plots and false alarms, the tracks drawn over the true paths, and the tracking error of a single-model filter against an IMM" loading="lazy" width="1511" height="636"></div>
-      <div class="body">
-        <p class="kicker">C++20 / estimation / real time</p>
-        <h3>vakt <small>multi-target radar tracker</small></h3>
-        <p>Takes noisy measurements with false alarms and missed detections and keeps one track per object. It runs two motion models side by side (straight flight and coordinated turn) and weights them by how well each fits, so a jet in a hard turn is not lost. Data association, track start and deletion, ASTERIX output, a lock-free queue between sensor and tracker, and a scorer that measures how good the result is.</p>
-        <ul class="nums">
-          <li><b>124 m</b> vs 144 m<span>mean tracking error, IMM against one model, 40 runs</span></li>
-          <li><b>271 → 60</b><span>identity switches, same runs</span></li>
-          <li><b>34</b><span>tests, no warnings at /W4</span></li>
-        </ul>
-        <p class="honest">60 identity switches is still too many. Simulated data only. Both are in the README as next steps.</p>
-        <p class="tags"><span>Eigen</span><span>IMM / EKF</span><span>Hungarian assignment</span><span>ASTERIX CAT048</span><span>CMake / CI</span></p>
-        <p class="links"><a class="btn small" href="https://github.com/gurmaan-singh/vakt">Source</a> <a class="btn small" href="https://github.com/gurmaan-singh/vakt/blob/main/docs/DESIGN.md">Design notes</a></p>
-      </div>
-    </article>
-
-    <article class="project flip" data-reveal>
-      <div class="shot"><img src="assets/hover.gif" alt="Animation of a simulated quadrotor flying a figure of eight, seen from above with a height plot beside it" loading="lazy" width="528" height="220"></div>
-      <div class="body">
-        <p class="kicker">Python / control / estimation</p>
-        <h3>hover <small>quadrotor flight-controller simulator</small></h3>
-        <p>Rigid-body physics with lagged motors, drag and wind; noisy gyro, accelerometer, GPS, barometer and compass; a 15-state error-state Kalman filter that estimates position, velocity, attitude and both sensor biases; and a cascaded controller from position down to motor thrusts. The controller only sees what the filter tells it.</p>
-        <ul class="nums">
-          <li><b>0.10 m</b><span>rms error on a figure of eight at 3.5 m/s</span></li>
-          <li><b>0.3°</b><span>attitude estimate error in flight</span></li>
-          <li><b>23</b><span>tests: physics against closed-form results, then whole flights</span></li>
-        </ul>
-        <p class="honest">Survives a 6 m/s gust and one motor at 55 % thrust. Not sensor delay or total motor loss, and the README says so.</p>
-        <p class="tags"><span>NumPy</span><span>ESKF</span><span>Quaternions</span><span>Cascaded PID</span><span>Mixer saturation</span></p>
-        <p class="links"><a class="btn small" href="https://github.com/gurmaan-singh/hover">Source</a> <a class="btn small" href="https://github.com/gurmaan-singh/hover/blob/main/docs/DESIGN.md">Design notes</a></p>
-      </div>
-    </article>
-
-    <article class="project" data-reveal>
-      <div class="shot"><img src="assets/rudp.png" alt="Congestion window of one flow through a bottleneck link, a textbook sawtooth between 50 and 100 kilobytes" loading="lazy" width="1260" height="520"></div>
-      <div class="body">
-        <p class="kicker">C++20 / networking / concurrency</p>
-        <h3>rudp <small>reliable byte stream over UDP</small></h3>
-        <p>Handshake, sliding window, selective acknowledgements, retransmission timer, congestion and flow control, clean close. The connection class does no I/O and never reads a clock, so the same code runs over real sockets on Windows and Linux and inside a deterministic network simulator that drops, delays, reorders, duplicates and corrupts packets.</p>
-        <ul class="nums">
-          <li><b>89 %</b><span>of a bottleneck link filled; 38 % with congestion control off</span></li>
-          <li><b>20 %</b><span>packet loss survived, every byte checked</span></li>
-          <li><b>28</b><span>tests, incl. 40 random networks and a real loopback transfer</span></li>
-        </ul>
-        <p class="honest">One connection per socket, no delayed ACKs, Reno-style congestion control. The design notes include the bug that made a 40 ms path report a 4 s round trip.</p>
-        <p class="tags"><span>Winsock / POSIX</span><span>SACK</span><span>RFC 6298</span><span>Simulation</span><span>GoogleTest</span></p>
-        <p class="links"><a class="btn small" href="https://github.com/gurmaan-singh/rudp">Source</a> <a class="btn small" href="https://github.com/gurmaan-singh/rudp/blob/main/docs/DESIGN.md">Design notes</a></p>
-      </div>
-    </article>
-
-    <article class="project flip" data-reveal>
-      <div class="shot"><img src="assets/labyrint.png" alt="Jump Point Search on a maze: dark to bright red shows the order cells were searched, a white line the path" loading="lazy" width="1400" height="900"></div>
-      <div class="body">
-        <p class="kicker">TypeScript / algorithms / visualisation</p>
-        <h3>labyrint <small>pathfinding lab</small></h3>
-        <p>A* and its relatives, Jump Point Search, any-angle Theta*, and D* Lite for replanning while the map changes, with eight map generators, a benchmark, and a browser visualiser that runs them side by side. Every optimal algorithm is checked against Dijkstra on hundreds of random maps.</p>
-        <ul class="nums">
-          <li><b>11×</b><span>fewer cells searched by JPS than A* on cave maps</span></li>
-          <li><b>7×</b><span>less work for D* Lite than replanning from scratch</span></li>
-          <li><b>24</b><span>tests, no failures in the cross-checks</span></li>
-        </ul>
-        <p class="tags"><span>A*</span><span>JPS</span><span>Theta*</span><span>D* Lite</span><span>Canvas</span></p>
-        <p class="links"><a class="btn small primary" href="labyrint/">Try it live</a> <a class="btn small" href="https://github.com/gurmaan-singh/labyrint">Source</a> <a class="btn small" href="https://github.com/gurmaan-singh/labyrint/blob/main/docs/DESIGN.md">Design notes</a></p>
-      </div>
-    </article>
-
-    <article class="project" data-reveal>
-      <div class="shot"><img src="assets/lagesbild.png" alt="A map of the Baltic Sea with symbols for aircraft and ships, restricted zones, a track list and an alert feed" loading="lazy" width="1500" height="900"></div>
-      <div class="body">
-        <p class="kicker">TypeScript / maps / live data</p>
-        <h3>lägesbild <small>situational picture</small></h3>
-        <p>A web map that shows what is where: standard military symbols, one-minute vectors, trails, uncertainty circles, zones with alerts, a sorted track list. It takes tracks from a scripted scenario, from vakt over UDP, from live aircraft positions (OpenSky) and from live ship positions (AIS, with a decoder written from the spec).</p>
-        <ul class="nums">
-          <li><b>4</b><span>sources behind one track type</span></li>
-          <li><b>31</b><span>tests, the AIS decoder checked on a real sentence</span></li>
-          <li><b>0</b><span>live tracks ever labelled friend or hostile</span></li>
-        </ul>
-        <p class="honest">Nothing in a transponder says who is friendly, so live data is only ever neutral or unknown. The AIS stream was not reachable from my network, so that path is tested on sentences, not the live feed.</p>
-        <p class="tags"><span>MapLibre GL</span><span>milsymbol</span><span>WebSocket</span><span>NMEA / AIS</span><span>Node</span></p>
-        <p class="links"><a class="btn small" href="https://github.com/gurmaan-singh/lagesbild">Source</a> <a class="btn small" href="https://github.com/gurmaan-singh/lagesbild/blob/main/docs/DESIGN.md">Design notes</a></p>
-      </div>
-    </article>
-    <article class="project flip" data-reveal>
-      <div class="shot"><img src="assets/kartlagg.png" alt="Three maps of the same floor: the truth, the map from odometry alone smeared and rotated, and the crisp map from particle-filter SLAM" loading="lazy" width="1807" height="402"></div>
-      <div class="body">
-        <p class="kicker">Python / estimation / robotics</p>
-        <h3>kartlagg <small>localisation and SLAM from a 2D lidar</small></h3>
-        <p>A simulated robot that sees only with a lidar. One particle filter finds the robot on a known map. Another builds the map while finding the robot, with every particle carrying its own map and snapping each new scan to it. Both are written from scratch, along with the ray casting, the noise models and the map score.</p>
-        <ul class="nums">
-          <li><b>0.21 m</b> vs 1.38 m<span>position error, SLAM against odometry alone, five runs</span></li>
-          <li><b>0.87</b> vs 0.47<span>map quality (F1) over the same runs</span></li>
-          <li><b>17</b><span>tests, including SLAM beating dead reckoning</span></li>
-        </ul>
-        <p class="honest">Finding the robot with no prior succeeds in 7 of 10 runs at 1,000 particles. The failures are measured and explained in the README, not hidden.</p>
-        <p class="tags"><span>NumPy / SciPy</span><span>Particle filter</span><span>Likelihood field</span><span>Occupancy grid</span><span>Scan matching</span></p>
-        <p class="links"><a class="btn small" href="https://github.com/gurmaan-singh/kartlagg">Source</a> <a class="btn small" href="https://github.com/gurmaan-singh/kartlagg/blob/main/docs/DESIGN.md">Design notes</a></p>
-      </div>
-    </article>
-
-    <article class="project" data-reveal>
-      <div class="shot"><img src="assets/motionkit.png" alt="Tracking error and motor voltage along a move, with and without feed-forward" loading="lazy" width="1480" height="480"></div>
-      <div class="body">
-        <p class="kicker">C11 / embedded / motor control</p>
-        <h3>motionkit <small>motor-control firmware building blocks</small></h3>
-        <p>Jerk-limited S-curve motion profiles in closed form, a PID with the details a real loop needs, a quadrature encoder decoder, a ring buffer for interrupt handlers, and CRC-16 plus COBS framing for a serial link. No heap and no operating system, so it runs on a microcontroller and in a test on a PC. A simulated DC motor with friction checks the control loop.</p>
-        <ul class="nums">
-          <li><b>10×</b><span>smaller tracking error with feed-forward on the simulated motor</span></li>
-          <li><b>2,000</b><span>random S-curve moves checked against every limit</span></li>
-          <li><b>33</b><span>tests, in both float and double builds</span></li>
-        </ul>
-        <p class="honest">Tested on a PC. It has not been built for a microcontroller yet, and the README says so.</p>
-        <p class="tags"><span>C11</span><span>S-curve</span><span>PID + feed-forward</span><span>COBS / CRC-16</span><span>GoogleTest</span></p>
-        <p class="links"><a class="btn small" href="https://github.com/gurmaan-singh/motionkit">Source</a></p>
-      </div>
-    </article>
-    <article class="project flip" data-reveal>
-      <div class="shot"><img src="assets/trajopt.gif" alt="Animation of a cart swinging a pole up from hanging and balancing it" loading="lazy" width="525" height="238"></div>
-      <div class="body">
-        <p class="kicker">Python / optimal control / autonomy</p>
-        <h3>trajopt <small>trajectory optimisation and receding-horizon control</small></h3>
-        <p>iLQR written from scratch, with control limits handled inside the optimiser, and a model-predictive controller on top. One solver swings a pendulum and a cart-pole up, parks a car between obstacles, and flies a quadrotor through four gates at set times. A receding-horizon version balances the pole with a model that is 10 to 20 % wrong while it gets shoved.</p>
-        <ul class="nums">
-          <li><b>4</b><span>different systems, one optimiser</span></li>
-          <li><b>1.1 cm</b><span>worst miss over four gates</span></li>
-          <li><b>17</b><span>tests, checked against the exact LQR solution and conservation laws</span></li>
-        </ul>
-        <p class="honest">It finds local optima, and the README shows the swing-up that goes wrong from a bad starting guess and what fixed it.</p>
-        <p class="tags"><span>iLQR / DDP</span><span>MPC</span><span>Control limits</span><span>Riccati</span><span>NumPy</span></p>
-        <p class="links"><a class="btn small" href="https://github.com/gurmaan-singh/trajopt">Source</a> <a class="btn small" href="https://github.com/gurmaan-singh/trajopt/blob/main/docs/DESIGN.md">Design notes</a></p>
-      </div>
-    </article>
-    <article class="project" data-reveal>
-      <div class="shot"><img src="assets/plcsim.png" alt="Two batches of a mixing tank: tank level, controller state, and valve and mixer outputs over time" loading="lazy" width="1286" height="662"></div>
-      <div class="body">
-        <p class="kicker">Python / automation / compilers</p>
-        <h3>plcsim <small>a PLC language interpreter</small></h3>
-        <p>A lexer, parser, type checker and interpreter for a subset of IEC 61131-3 Structured Text, with a real scan cycle and the standard timers and counters. It runs a batch-mixing controller against a model of the tank, so control logic can be tested before a machine exists. Mistakes, such as a real number put in an integer, are found with a line number before the first scan.</p>
-        <ul class="nums">
-          <li><b>74</b><span>tests, from the lexer to the whole plant</span></li>
-          <li><b>25</b><span>random operator scripts checked against the safety rules</span></li>
-          <li><b>3</b><span>timer kinds (TON, TOF, TP) tested to the scan</span></li>
-        </ul>
-        <p class="honest">A subset, and not a certified runtime. It does not model real I/O delay or jitter, and the README lists what is missing.</p>
-        <p class="tags"><span>IEC 61131-3</span><span>Recursive descent</span><span>Scan cycle</span><span>State machines</span><span>pytest</span></p>
-        <p class="links"><a class="btn small" href="https://github.com/gurmaan-singh/plcsim">Source</a> <a class="btn small" href="https://github.com/gurmaan-singh/plcsim/blob/main/docs/DESIGN.md">Design notes</a></p>
-      </div>
-    </article>
-    <article class="project flip" data-reveal>
-      <div class="shot"><img src="assets/camlab.png" alt="A square grid bent into a barrel by lens distortion, and the same grid straightened by the estimated distortion" loading="lazy" width="1186" height="431"></div>
-      <div class="body">
-        <p class="kicker">Python / computer vision / geometry</p>
-        <h3>camlab <small>camera calibration and two-view geometry</small></h3>
-        <p>Camera calibration from views of a flat target (Zhang's method with nonlinear refinement), pose from a known object, and relative pose between two views with RANSAC against wrong matches. All written from scratch in NumPy, with no OpenCV, and scored against synthetic scenes where the right answer is known.</p>
-        <ul class="nums">
-          <li><b>0.12 %</b><span>focal length error with 15 views and 0.3 px noise</span></li>
-          <li><b>40 %</b><span>wrong matches survived, rotation within 1 degree</span></li>
-          <li><b>26</b><span>tests, including views that make calibration impossible</span></li>
-        </ul>
-        <p class="honest">The README shows a principal-point error that more data does not fix, and explains it: the lens model was too simple. It starts from pixel coordinates; there is no image processing.</p>
-        <p class="tags"><span>Homography / DLT</span><span>Levenberg-Marquardt</span><span>RANSAC</span><span>Epipolar geometry</span><span>NumPy</span></p>
-        <p class="links"><a class="btn small" href="https://github.com/gurmaan-singh/camlab">Source</a> <a class="btn small" href="https://github.com/gurmaan-singh/camlab/blob/main/docs/DESIGN.md">Design notes</a></p>
-      </div>
-    </article>
-    <article class="project" data-reveal>
-      <div class="shot"><img src="assets/cansim.png" alt="Waveforms of three CAN nodes starting together: two drop out during the identifier bits while the bus carries the winner" loading="lazy" width="1285" height="636"></div>
-      <div class="body">
-        <p class="kicker">C++20 / vehicle networks / embedded</p>
-        <h3>cansim <small>the CAN bus, from the bits up</small></h3>
-        <p>CAN frames as they appear on the wire, with CRC-15 and bit stuffing, and several simulated nodes on one wire: arbitration with no collisions, acknowledgements, error frames, retransmission, the error counters and bus-off. The J1939 identifier layout used on heavy vehicles sits on top. Noise can be injected at any bit.</p>
-        <ul class="nums">
-          <li><b>135 / 160</b><span>worst-case bits of a standard / extended frame, matching the known figures</span></li>
-          <li><b>40</b><span>random multi-node scenarios, every frame delivered once, intact</span></li>
-          <li><b>35</b><span>tests, including every single-bit error being detected</span></li>
-        </ul>
-        <p class="honest">Classic CAN only, at the level of bits rather than voltages: no propagation delay, no CAN FD. The README says what the error counting leaves out.</p>
-        <p class="tags"><span>CAN 2.0A/B</span><span>J1939</span><span>CRC-15</span><span>Bit stuffing</span><span>GoogleTest</span></p>
-        <p class="links"><a class="btn small" href="https://github.com/gurmaan-singh/cansim">Source</a> <a class="btn small" href="https://github.com/gurmaan-singh/cansim/blob/main/docs/DESIGN.md">Design notes</a></p>
-      </div>
-    </article>
-    <article class="project flip" data-reveal>
-      <div class="shot"><img src="assets/rtsched.png" alt="Three schedules of the same tasks: with no protocol the high-priority task waits behind a medium one, with priority inheritance or ceiling it does not" loading="lazy" width="1286" height="688"></div>
-      <div class="body">
-        <p class="kicker">Python / real-time systems / analysis</p>
-        <h3>rtsched <small>real-time scheduling, simulated and proved</small></h3>
-        <p>A simulator for fixed-priority and earliest-deadline-first scheduling with shared resources, and the mathematics that predicts what it will do: response-time analysis, utilisation bounds, the processor-demand test. The tests make the two check each other, so the analytic worst case has to equal the simulated one on hundreds of random task sets. It reproduces the priority inversion that stalled the Mars Pathfinder lander, and the two protocols that fix it.</p>
-        <ul class="nums">
-          <li><b>400</b><span>random task sets where analysis and simulation must agree exactly</span></li>
-          <li><b>17 to 7</b><span>ticks of response time for the high-priority task, no protocol against priority inheritance</span></li>
-          <li><b>22</b><span>tests in under a second</span></li>
-        </ul>
-        <p class="honest">One processor, no nested locks, and no cost for context switches. The README says so, and notes that its schedulability plot flatters rate monotonic by using friendly periods.</p>
-        <p class="tags"><span>RMS / EDF</span><span>Response-time analysis</span><span>Priority inheritance</span><span>Priority ceiling</span><span>pytest</span></p>
-        <p class="links"><a class="btn small" href="https://github.com/gurmaan-singh/rtsched">Source</a> <a class="btn small" href="https://github.com/gurmaan-singh/rtsched/blob/main/docs/DESIGN.md">Design notes</a></p>
-      </div>
-    </article>
-  </section>
-
-  <section id="how" class="section">
-    <h2><span>02</span> How I work</h2>
-    <div class="cols">
-      <div>
-        <h3>Tests are the evidence</h3>
-        <p>Claims in a README should be things a test can fail. The pathfinders are compared with Dijkstra on random maps; the transport protocol is run over hundreds of random bad networks and checks every byte; the flight controller is flown through gusts and a failing motor.</p>
-      </div>
-      <div>
-        <h3>I write down what went wrong</h3>
-        <p>Every project has design notes that include the bugs: a filter that started 95° out because the accelerometer read zero on the floor, a timer stuck at 60 seconds, a server that crashed on a 404. If I cannot explain a choice, I have not understood it yet.</p>
-      </div>
-      <div>
-        <h3>Limits are in the README</h3>
-        <p>Each project lists what it does not do and what I would do next. A tracker that has only seen simulated data should say so on its front page.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="about" class="section">
-    <h2><span>03</span> About</h2>
-    <div class="about">
-      <p>I study mechatronics engineering at Fontys. My work sits where hardware meets software: control, estimation, embedded systems and the networks that connect them. I work in C++, Python and TypeScript, and with Arduino and PlatformIO, KiCad, MATLAB, LabVIEW and Siemens PLC tools at university.</p>
-      <p>I keep a notebook of about 1,400 linked notes and treat projects like experiments: a hypothesis, a measurement, a write-up. I am looking for an internship or summer job in 2027 and I am open to any location.</p>
-    </div>
-  </section>
-
-  <section id="contact" class="section">
-    <h2><span>04</span> Contact</h2>
-    <p>The code is on <a href="https://github.com/gurmaan-singh">GitHub</a>. Each repository has a README with how to run it, what it shows, and where it falls short.</p>
-  </section>
+  </div>
+</section>
 </main>
 
-<footer>
-  <span>© 2026 Gurmaan Singh</span>
-  <span>Static page. No tracking, no cookies.</span>
+<footer class="end">
+  <h2>Summer 2027<em>.</em></h2>
+  <p>I am looking for a summer job or internship in Sweden, Norway, Finland, Denmark or the Netherlands, in sensing, control or embedded software.</p>
+  <p><a href="https://github.com/gurmaan-singh">github.com/gurmaan-singh</a></p>
+  <div class="fine mono"><span>Type: Big Shoulders Display, IBM Plex Mono, Instrument Sans</span><a href="#top">Back to the top</a></div>
 </footer>
+
+<img id="peek" alt="">
 <script src="main.js"></script>
 </body>
 </html>
